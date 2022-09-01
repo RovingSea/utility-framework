@@ -20,7 +20,8 @@ Utility provides three major functions.
   
   When this exception occurs, the programmer can perform 
   additional handling on it by @ErrorPostProcessor, 
-  customize the content of the response and how to handle.
+  customize the content of the response and special handling
+  via @ErrorHandler.
 
 * **Checking parameter**
 
