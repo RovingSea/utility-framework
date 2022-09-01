@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.utilityframework.spring.boot.core.error.spring.UtilityErrorAutoConfiguration
