@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.rovingsea.utilityframework.core.error.spring.UtilityErrorAutoConfiguration
+  io.github.rovingsea.utilityframework.core.error.spring.UtilityErrorAutoConfiguration
