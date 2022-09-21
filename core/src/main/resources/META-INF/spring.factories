@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  io.github.rovingsea.utilityframework.core.error.spring.UtilityErrorAutoConfiguration\
+  io.github.rovingsea.utilityframework.core.response.UtilityResponseAutoConfiguration
