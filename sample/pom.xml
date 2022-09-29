@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.rovingsea.utilityframework</groupId>
-            <artifactId>utility-spring-boot</artifactId>
+            <artifactId>utility-spring-boot-core</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
