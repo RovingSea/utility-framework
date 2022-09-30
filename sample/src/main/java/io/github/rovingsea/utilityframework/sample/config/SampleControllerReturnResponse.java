@@ -3,7 +3,6 @@ package io.github.rovingsea.utilityframework.sample.config;
 import io.github.rovingsea.utilityframework.core.response.ControllerReturnResponse;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Map;
@@ -12,7 +11,6 @@ import java.util.Map;
  * @author Haixin Wu
  * @since 1.0.0
  */
-@Component
 public class SampleControllerReturnResponse implements ControllerReturnResponse {
 
     @Override
