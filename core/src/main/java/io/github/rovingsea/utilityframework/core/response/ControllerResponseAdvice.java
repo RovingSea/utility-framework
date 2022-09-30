@@ -1,5 +1,6 @@
 package io.github.rovingsea.utilityframework.core.response;
 
+import com.alibaba.fastjson.JSON;
 import io.github.rovingsea.utilityframework.core.UtilityContextException;
 import io.github.rovingsea.utilityframework.core.exception.ExceptionDispatcher;
 import org.springframework.context.ApplicationContext;
@@ -78,7 +79,7 @@ public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
         this.controllerReturnResponse.setResponseHeader(responseHeader, body, request, response);
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setAll(responseHeader);
-        return responseBody;
+        return JSON.toJSONString(responseBody);
     }
 }
 
