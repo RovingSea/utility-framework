@@ -27,24 +27,47 @@ import java.util.Map;
 @RestControllerAdvice
 public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
 
+    /**
+     * Giving the ability to set responses
+     */
     private final ControllerReturnResponse controllerReturnResponse;
 
     public ControllerResponseAdvice(ApplicationContext context) {
-        ControllerReturnResponse controllerReturnResponse = context.getBean(ControllerReturnResponse.class);
+        ControllerReturnResponse controllerReturnResponse
+                = context.getBean(ControllerReturnResponse.class);
         if (controllerReturnResponse == null) {
             throw new UtilityContextException("Response configuration needs to be set");
         }
         this.controllerReturnResponse = controllerReturnResponse;
     }
 
+    /**
+     * Do not process the response result of {@link ExceptionDispatcher},
+     * because the exception result has corresponding processing,
+     * so there is no need for additional processing here.
+     *
+     * @param returnType    the return type
+     * @param converterType the selected converter type
+     * @return Whether it is the result processed by {@link ExceptionDispatcher}
+     */
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
         Executable executable = returnType.getExecutable();
         Class<?> declaringClass = executable.getDeclaringClass();
-        String name = executable.getName();
         return declaringClass != ExceptionDispatcher.class;
     }
 
+    /**
+     * The results returned by the Controller will be processed here again,
+     * and the final results will be used as the response-body
+     * @param body the body to be written
+     * @param returnType the return type of the controller method
+     * @param selectedContentType the content type selected through content negotiation
+     * @param selectedConverterType the converter type selected to write to the response
+     * @param request the current request
+     * @param response the current response
+     * @return response-body
+     */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType,
                                   MediaType selectedContentType, Class selectedConverterType,

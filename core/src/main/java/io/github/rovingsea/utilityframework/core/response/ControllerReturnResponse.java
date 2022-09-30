@@ -18,11 +18,25 @@ import java.util.Map;
 public interface ControllerReturnResponse {
 
 
+    /**
+     * Setting response-body
+     * @param responseBody response-body
+     * @param returnValue The results returned by the Controller
+     * @param request entire request object
+     * @param response entire response object
+     */
     default void setResponseBody(Map<String, Object> responseBody, Object returnValue,
                                  ServerHttpRequest request, ServerHttpResponse response) {
 
     }
 
+    /**
+     * Setting response-header
+     * @param responseHeader response-header
+     * @param returnValue The results returned by the Controller
+     * @param request entire request object
+     * @param response entire response object
+     */
     default void setResponseHeader(Map<String, String> responseHeader, Object returnValue,
                                    ServerHttpRequest request, ServerHttpResponse response) {
 

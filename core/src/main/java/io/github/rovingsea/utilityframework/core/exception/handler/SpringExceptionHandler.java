@@ -4,7 +4,6 @@ import io.github.rovingsea.utilityframework.core.exception.ExceptionDispatcher;
 import io.github.rovingsea.utilityframework.core.response.ControllerExceptionResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 
@@ -37,7 +36,7 @@ public class SpringExceptionHandler extends AbstractExceptionHandler {
     }
 
     @Override
-    public Object doHandle(Map<String, Object> responseBody, Map<String, String> responseHeader,
+    public void doHandle(Map<String, Object> responseBody, Map<String, String> responseHeader,
                            HttpServletRequest request, HttpServletResponse response,
                            Throwable throwable) {
         if (throwable instanceof HttpMediaTypeException) {
@@ -50,6 +49,5 @@ public class SpringExceptionHandler extends AbstractExceptionHandler {
             responseBody.put("message", HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase());
             response.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
         }
-        return responseBody;
     }
 }

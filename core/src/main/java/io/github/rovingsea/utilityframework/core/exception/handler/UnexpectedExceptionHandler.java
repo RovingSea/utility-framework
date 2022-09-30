@@ -1,16 +1,17 @@
 package io.github.rovingsea.utilityframework.core.exception.handler;
 
+import io.github.rovingsea.utilityframework.core.exception.UtilityException;
 import io.github.rovingsea.utilityframework.core.response.ControllerExceptionResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- *
+ * Except for spring exceptions and {@link UtilityException},
+ * other exceptions will be handled by it.
  * @author Haixin Wu
  * @since 1.0.0
  */
@@ -21,12 +22,11 @@ public class UnexpectedExceptionHandler extends AbstractExceptionHandler {
     }
 
     @Override
-    public Object doHandle(Map<String, Object> responseBody, Map<String, String> responseHeader,
-                           HttpServletRequest request, HttpServletResponse response,
-                           Throwable throwable) {
-        responseBody.put("code", HttpStatus.METHOD_NOT_ALLOWED.value());
-        responseBody.put("message", HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase());
-        response.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
-        return responseBody;
+    public void doHandle(Map<String, Object> responseBody, Map<String, String> responseHeader,
+                         HttpServletRequest request, HttpServletResponse response,
+                         Throwable throwable) {
+        responseBody.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        responseBody.put("message", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 }

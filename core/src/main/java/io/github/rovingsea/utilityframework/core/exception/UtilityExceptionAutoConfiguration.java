@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
+ * Container of utility exception, it has been registered in spring.factories.
  * @author Haixin Wu
  * @since 1.0.0
  */

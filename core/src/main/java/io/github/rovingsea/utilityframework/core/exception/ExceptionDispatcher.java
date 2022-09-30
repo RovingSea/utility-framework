@@ -17,6 +17,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * When any exception occurs in the Controller,
+ * it will be received and the response will be set finally.
  * @author Haixin Wu
  * @since 1.0.0
  */
@@ -25,11 +27,15 @@ public class ExceptionDispatcher {
 
     private final ApplicationContext context;
 
-
     public ExceptionDispatcher(ApplicationContext context) {
         this.context = context;
     }
 
+    /**
+     * The entry where all exceptions occurred in the Controller are handled.
+     * @param throwable exception occurred in the Controller
+     * @return response-body
+     */
     @ExceptionHandler
     public Object doDispatch(Throwable throwable) {
         AbstractExceptionHandler exceptionHandler = getExceptionHandler(throwable);
@@ -38,11 +44,18 @@ public class ExceptionDispatcher {
         HttpServletRequest request = getHttpServletRequest();
         HttpServletResponse response = getHttpServletResponse();
         exceptionHandler.doHandle(responseBody, responseHeader, request, response, throwable);
+        exceptionHandler.setResponseHeader(responseHeader, response);
         return responseBody;
     }
 
+    /**
+     * Get the exception handler for by exception type
+     * @param throwable exception occurred in the Controller
+     * @return subclass of {@link AbstractExceptionHandler}
+     */
     private AbstractExceptionHandler getExceptionHandler(Throwable throwable) {
-        AbstractExceptionHandler exceptionHandler = this.context.getBean(UnexpectedExceptionHandler.class);
+        AbstractExceptionHandler exceptionHandler
+                = this.context.getBean(UnexpectedExceptionHandler.class);
         if (throwable instanceof ServletException) {
             exceptionHandler = this.context.getBean(SpringExceptionHandler.class);
         }
@@ -73,7 +86,7 @@ public class ExceptionDispatcher {
             request = attributes.getRequest();
         }
         if (request == null) {
-            throw new IllegalThreadStateException("The current thread cannot get a response object");
+            throw new IllegalThreadStateException("The current thread cannot get a request object");
         }
         return request;
     }
