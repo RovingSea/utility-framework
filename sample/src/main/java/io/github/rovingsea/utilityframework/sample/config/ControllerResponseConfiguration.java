@@ -18,7 +18,7 @@ public class ControllerResponseConfiguration {
     }
 
     @Bean
-    public ControllerReturnResponse controllerResponseConfiguration() {
+    public ControllerReturnResponse controllerReturnResponse() {
         return new SampleControllerReturnResponse();
     }
 
