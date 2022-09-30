@@ -2,7 +2,10 @@ package io.github.rovingsea.utilityframework.core.exception.handler;
 
 import io.github.rovingsea.utilityframework.core.exception.ExceptionDispatcher;
 import io.github.rovingsea.utilityframework.core.response.ControllerExceptionResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -31,6 +34,14 @@ import java.util.Map;
  */
 public class SpringExceptionHandler extends AbstractExceptionHandler {
 
+    protected Logger logger = LoggerFactory.getLogger(getClass());
+
+    static {
+        // Eagerly load the NestedExceptionUtils class to avoid classloader deadlock
+        // issues on OSGi when calling getMessage(). Reported by Don Brown; SPR-5607.
+        NestedExceptionUtils.class.getName();
+    }
+
     public SpringExceptionHandler(ApplicationContext context) {
         super(context.getBean(ControllerExceptionResponse.class));
     }
@@ -39,6 +50,8 @@ public class SpringExceptionHandler extends AbstractExceptionHandler {
     public void doHandle(Map<String, Object> responseBody, Map<String, String> responseHeader,
                            HttpServletRequest request, HttpServletResponse response,
                            Throwable throwable) {
+        Throwable rootCause = NestedExceptionUtils.getRootCause(throwable);
+        logger.error(NestedExceptionUtils.buildMessage(throwable.getMessage(), rootCause));
         if (throwable instanceof HttpMediaTypeException) {
             responseBody.put("code", HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
             responseBody.put("message", HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase());
