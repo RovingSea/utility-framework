@@ -17,4 +17,14 @@ public class ValidatorAutoConfiguration {
         return new ValidatorLoader(context);
     }
 
+    @Bean
+    public ValidatorWebMvcConfigurer validatorWebMvcConfigurer(ApplicationContext context) {
+        return new ValidatorWebMvcConfigurer(context);
+    }
+
+    @Bean
+    public ValidatorHandlerInterceptor validatorHandlerInterceptor(ApplicationContext context) {
+        return new ValidatorHandlerInterceptor(context);
+    }
+
 }

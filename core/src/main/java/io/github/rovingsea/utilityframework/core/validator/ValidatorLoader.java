@@ -1,22 +1,19 @@
 package io.github.rovingsea.utilityframework.core.validator;
 
-import io.github.rovingsea.utilityframework.core.UtilityContextException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.AbstractHandlerMethodMapping;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *
  * @author Haixin Wu
  * @since 1.0.0
  */
@@ -24,61 +21,83 @@ public class ValidatorLoader {
 
     private final ApplicationContext context;
 
-    private Map<String, Object> validators;
+    private final Map<String, Object> validatorMap;
+
+    private final List<String> validatingPaths;
+
+    private final Map<String, Method> validatorMethodMap;
 
     public ValidatorLoader(ApplicationContext context) {
         this.context = context;
+        this.validatorMap = new HashMap<>();
+        this.validatingPaths = new ArrayList<>();
+        this.validatorMethodMap = new ConcurrentHashMap<>();
     }
 
     @PostConstruct
     public void initialize() {
-        loadValidators(this.context);
+        loadValidatorMap(this.context);
+        loadValidatingPaths(this.context);
+        loadValidatorMethodMap(this.context);
     }
 
-    private void loadValidators(ApplicationContext context) {
-        Map<String, Object> beansWithValidatorAnnotation
-                = this.context.getBeansWithAnnotation(Validator.class);
-
-        AbstractHandlerMethodMapping<?> handlerMethodMapping
-                = this.context.getBean(AbstractHandlerMethodMapping.class);
-        // todo set validators
-        for (String beanName : beansWithValidatorAnnotation.keySet()) {
-            Class<?> validatorClazz = beansWithValidatorAnnotation.get(beanName).getClass();
+    //todo  Bind the validating path with the validating method
+    private void loadValidatorMethodMap(ApplicationContext context) {
+        for (String beanName : this.validatorMap.keySet()) {
+            Class<?> validatorClazz = this.validatorMap.get(beanName).getClass();
             Validator validator = validatorClazz.getAnnotation(Validator.class);
-
             String pathPrefix = validator.value();
-            List<String> path = getPath(validatorClazz, pathPrefix);
-
-            List<HandlerMethod> handlerMethodList
-                    = handlerMethodMapping.getHandlerMethodsForMappingName(pathPrefix);
-
-            if (CollectionUtils.isEmpty(handlerMethodList)) {
-                throw new UtilityContextException("Invalid validating path, " +
-                        "please check whether there is this path in Controllers");
+            for (String validatingPath : this.validatingPaths) {
+                String methodValidPath = validatingPath.replaceFirst(pathPrefix, "");
+                for (Method method : validatorClazz.getMethods()) {
+//                    method.getAnnotation()
+                }
             }
-
-            Map<?, HandlerMethod> handlerMethodMap = handlerMethodMapping.getHandlerMethods();
-
         }
     }
 
-    private List<String> getPath(Class<?> validatorClazz, String pathPrefix) {
-        List<String> pathList = new ArrayList<>();
+    private void loadValidatingPaths(ApplicationContext context) {
+        for (String beanName : this.validatorMap.keySet()) {
+            Class<?> validatorClazz = this.validatorMap.get(beanName).getClass();
+            Validator validator = validatorClazz.getAnnotation(Validator.class);
+            String pathPrefix = validator.value();
+            setValidatingPaths(validatorClazz, pathPrefix);
+        }
+    }
+
+    private void loadValidatorMap(ApplicationContext context) {
+        this.validatorMap.putAll(context.getBeansWithAnnotation(Validator.class));
+    }
+
+    private void setValidatingPaths(Class<?> validatorClazz, String pathPrefix) {
         for (Method method : validatorClazz.getMethods()) {
             RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
             if (requestMapping != null) {
-                pathList.add(pathPrefix + requestMapping.name());
+                addPath(requestMapping.value(), pathPrefix);
             }
             GetMapping getMapping = method.getAnnotation(GetMapping.class);
             if (getMapping != null) {
-                pathList.add(pathPrefix + getMapping.name());
+                addPath(getMapping.value(), pathPrefix);
             }
             PostMapping postMapping = method.getAnnotation(PostMapping.class);
             if (postMapping != null) {
-                pathList.add(pathPrefix + postMapping.name());
+                addPath(postMapping.value(), pathPrefix);
             }
         }
-        return pathList;
     }
+
+    private void addPath(String[] values, String pathPrefix) {
+        if (values == null) {
+            return;
+        }
+        for (String value : values) {
+            this.validatingPaths.add(pathPrefix + value);
+        }
+    }
+
+    public List<String> getValidatingPaths() {
+        return validatingPaths;
+    }
+
 
 }
