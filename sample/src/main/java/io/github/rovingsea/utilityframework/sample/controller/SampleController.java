@@ -3,6 +3,7 @@ package io.github.rovingsea.utilityframework.sample.controller;
 import io.github.rovingsea.utilityframework.core.exception.http.InnerServerException;
 import io.github.rovingsea.utilityframework.sample.entity.SampleEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,10 +21,10 @@ public class SampleController {
     }
 
     @GetMapping("/object")
-    public Object object() {
+    public Object object(@RequestBody SampleEntity sample) {
         SampleEntity sampleEntity = new SampleEntity();
-        sampleEntity.setName("rovingsea");
-        sampleEntity.setAge(21);
+        sampleEntity.setName(sample.getName());
+        sampleEntity.setAge(sample.getAge());
         return sampleEntity;
     }
 
