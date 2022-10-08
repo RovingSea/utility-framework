@@ -1,13 +1,13 @@
 package io.github.rovingsea.utilityframework.core.validator;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -20,67 +20,49 @@ public class ValidatorLoader {
 
     private final Map<String, Object> validatorMap;
 
-    private final List<String> validatingPaths;
+    private final List<String> validatePaths;
 
-    private final Map<String, Method> validatorMethodMap;
+    private final Map<String, ValidatorInvoker> validatorMethodMap;
 
     public ValidatorLoader(ApplicationContext context) {
         this.context = context;
         this.validatorMap = new HashMap<>();
-        this.validatingPaths = new ArrayList<>();
+        this.validatePaths = new ArrayList<>();
         this.validatorMethodMap = new ConcurrentHashMap<>();
     }
 
     @PostConstruct
     public void initialize() {
         loadValidatorMap(this.context);
-        loadValidatingPaths();
+        loadValidatingPathsAndValidatorMethods();
     }
 
-    private void loadValidatingPaths() {
+    private void loadValidatingPathsAndValidatorMethods() {
         for (String beanName : this.validatorMap.keySet()) {
-            Class<?> validatorClazz = this.validatorMap.get(beanName).getClass();
-            Validator validator = validatorClazz.getAnnotation(Validator.class);
-            String pathPrefix = validator.value();
-            setValidatingPaths(validatorClazz, pathPrefix);
+            Object validator = this.validatorMap.get(beanName);
+            Class<?> validatorClazz = validator.getClass();
+            Validator annotation = validatorClazz.getAnnotation(Validator.class);
+            String pathPrefix = annotation.value();
+            addValidatingPathAndValidatorMethod(validator, pathPrefix);
         }
     }
 
-    private void setValidatingPaths(Class<?> validatorClazz, String pathPrefix) {
-        for (Method method : validatorClazz.getMethods()) {
-            RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
-            if (requestMapping != null) {
-                addPath(requestMapping.value(), pathPrefix);
-                bindPathWithMethod(requestMapping.value(), pathPrefix, method);
+    private void addValidatingPathAndValidatorMethod(Object validator, String pathPrefix) {
+        for (Method method : validator.getClass().getMethods()) {
+            ValidateMapping validateMapping = method.getAnnotation(ValidateMapping.class);
+            if (validateMapping == null) {
+                continue;
             }
-            GetMapping getMapping = method.getAnnotation(GetMapping.class);
-            if (getMapping != null) {
-                addPath(getMapping.value(), pathPrefix);
-                bindPathWithMethod(getMapping.value(), pathPrefix, method);
+            String[] values = validateMapping.value();
+            if (values == null) {
+                continue;
             }
-            PostMapping postMapping = method.getAnnotation(PostMapping.class);
-            if (postMapping != null) {
-                addPath(postMapping.value(), pathPrefix);
-                bindPathWithMethod(postMapping.value(), pathPrefix, method);
+            for (String value : values) {
+                String path = pathPrefix + value;
+                this.validatePaths.add(path);
+                this.validatorMethodMap.put(path,
+                        new ValidatorInvoker(validator, pathPrefix, value, method));
             }
-        }
-    }
-
-    private void addPath(String[] values, String pathPrefix) {
-        if (values == null) {
-            return;
-        }
-        for (String value : values) {
-            this.validatingPaths.add(pathPrefix + value);
-        }
-    }
-
-    private void bindPathWithMethod(String[] values, String pathPrefix, Method method) {
-        if (values == null) {
-            return;
-        }
-        for (String value : values) {
-            this.validatorMethodMap.put(value + pathPrefix, method);
         }
     }
 
@@ -88,16 +70,12 @@ public class ValidatorLoader {
         this.validatorMap.putAll(context.getBeansWithAnnotation(Validator.class));
     }
 
-    public List<String> getValidatingPaths() {
-        return this.validatingPaths;
+    public List<String> getValidatePaths() {
+        return this.validatePaths;
     }
 
-    public Map<String, Method> getValidatorMethodMap() {
-        return validatorMethodMap;
-    }
-
-    public Map<String, Object> getValidatorMap() {
-        return validatorMap;
+    public Map<String, ValidatorInvoker> getValidatorMethodMap() {
+        return this.validatorMethodMap;
     }
 
 }

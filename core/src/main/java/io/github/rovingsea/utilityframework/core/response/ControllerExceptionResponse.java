@@ -37,7 +37,7 @@ public interface ControllerExceptionResponse {
                                    HttpServletRequest request, HttpServletResponse response) {
         ResponseStatus annotation = throwable.getClass().getAnnotation(ResponseStatus.class);
         if (annotation != null) {
-            response.setStatus(annotation.code().value());
+            response.setStatus(annotation.value().value());
             return;
         }
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());

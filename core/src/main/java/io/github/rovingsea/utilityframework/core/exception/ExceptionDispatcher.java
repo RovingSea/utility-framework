@@ -5,8 +5,6 @@ import io.github.rovingsea.utilityframework.core.exception.handler.SpringExcepti
 import io.github.rovingsea.utilityframework.core.exception.handler.UnexpectedExceptionHandler;
 import io.github.rovingsea.utilityframework.core.exception.handler.UtilityExceptionHandler;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -19,10 +17,10 @@ import java.util.Map;
 /**
  * When any exception occurs in the Controller,
  * it will be received and the response will be set finally.
+ *
  * @author Haixin Wu
  * @since 1.0.0
  */
-@RestControllerAdvice
 public class ExceptionDispatcher {
 
     private final ApplicationContext context;
@@ -33,11 +31,11 @@ public class ExceptionDispatcher {
 
     /**
      * The entry where all exceptions occurred in the Controller are handled.
+     *
      * @param throwable exception occurred in the Controller
      * @return response-body
      */
-    @ExceptionHandler
-    public Object doDispatch(Throwable throwable) {
+    public HandlingExceptionResult doDispatch(Throwable throwable) {
         AbstractExceptionHandler exceptionHandler = getExceptionHandler(throwable);
         Map<String, Object> responseBody = newResponseBody();
         Map<String, String> responseHeader = newResponseHeader();
@@ -45,11 +43,12 @@ public class ExceptionDispatcher {
         HttpServletResponse response = getHttpServletResponse();
         exceptionHandler.doHandle(responseBody, responseHeader, request, response, throwable);
         exceptionHandler.setResponseHeader(responseHeader, response);
-        return responseBody;
+        return HandlingExceptionResult.init(responseBody);
     }
 
     /**
      * Get the exception handler for by exception type
+     *
      * @param throwable exception occurred in the Controller
      * @return subclass of {@link AbstractExceptionHandler}
      */

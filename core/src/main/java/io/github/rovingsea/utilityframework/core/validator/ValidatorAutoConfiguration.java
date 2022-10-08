@@ -18,13 +18,8 @@ public class ValidatorAutoConfiguration {
     }
 
     @Bean
-    public ValidatorWebMvcConfigurer validatorWebMvcConfigurer(ApplicationContext context) {
-        return new ValidatorWebMvcConfigurer(context);
-    }
-
-    @Bean
-    public ValidatorHandlerInterceptor validatorHandlerInterceptor(ApplicationContext context) {
-        return new ValidatorHandlerInterceptor(context);
+    public MappingInvokerAspect mappingInterceptor(ApplicationContext context) {
+        return new MappingInvokerAspect(context);
     }
 
 }
