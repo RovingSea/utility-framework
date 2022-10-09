@@ -4,6 +4,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
+ * <p>
+ * Encapsulates the path, the parameter verification method corresponding to the path,
+ * and the object executing the method.
+ * </p>
+ *
  * @author Haixin Wu
  * @since 1.0.0
  */

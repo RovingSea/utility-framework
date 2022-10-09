@@ -11,6 +11,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * <p>
+ * Information about {@link Validator} is loaded, such as path, object, and invoker.
+ * These information will  e used by required objects, for example, {@link MappingInvokerAspect}
+ * needs to use this information to invoke function that validate parameters before
+ * executing the controller method.
+ * </p>
+ *
  * @author Haixin Wu
  * @since 1.0.0
  */
@@ -18,10 +25,17 @@ public class ValidatorLoader {
 
     private final ApplicationContext context;
 
+    /**
+     * Each {@link Validator}.
+     */
     private final Map<String, Object> validatorMap;
-
+    /**
+     * Path requiring parameter verification.
+     */
     private final List<String> validatePaths;
-
+    /**
+     * {@link ValidatorInvoker} corresponding to each path.
+     */
     private final Map<String, ValidatorInvoker> validatorMethodMap;
 
     public ValidatorLoader(ApplicationContext context) {

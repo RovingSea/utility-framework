@@ -6,6 +6,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -14,6 +17,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
+ * <p>
+ * A aspect method for all methods annotated with {@link RequestMapping},
+ * {@link GetMapping}, {@link PostMapping}.
+ * </p>
+ * <p>
+ * Complete parameter validation and exception capture in the {@link Around}.
+ * </p>
+ *
  * @author Haixin Wu
  * @since 1.0.0
  */
@@ -39,7 +50,7 @@ public class MappingInvokerAspect {
     public Object intercept(ProceedingJoinPoint pjp) {
         ServletRequestAttributes servletRequestAttributes
                 = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        Object result = null;
+        Object result;
         try {
             if (servletRequestAttributes == null) {
                 return null;
