@@ -64,18 +64,15 @@ public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request, ServerHttpResponse response) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         Map<String, String> responseHeader = new LinkedHashMap<>();
-        if (body == null) {
-            return JSON.toJSON(null);
-        }
-        if (body.getClass() != HandlingExceptionResult.class) {
-            this.controllerReturnResponse.setResponseBody(responseBody, body, request, response);
-            this.controllerReturnResponse.setResponseHeader(responseHeader, body, request, response);
-            response.setStatusCode(HttpStatus.OK);
-            response.getHeaders().setAll(responseHeader);
-        } else {
+        if (body instanceof HandlingExceptionResult) {
             responseBody = ((HandlingExceptionResult) body).getResponseBody();
+            return JSON.toJSON(responseBody);
         }
-        return JSON.toJSON(responseBody);
+        this.controllerReturnResponse.setResponseBody(responseBody, body, request, response);
+        this.controllerReturnResponse.setResponseHeader(responseHeader, body, request, response);
+        response.setStatusCode(HttpStatus.OK);
+        response.getHeaders().setAll(responseHeader);
+        return body instanceof String ? JSON.toJSONString(responseBody) : JSON.toJSON(responseBody);
     }
 }
 
