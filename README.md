@@ -46,7 +46,7 @@ _Utility-framework-springboot_ provides three major functions.
   How will garbage be dealt with in the end will not be related 
   to what we are busy with.
 
-  After use, programmers only need to keep the concept of predictability
+  After using, programmers only need to keep the concept of predictability
   and unpredictability in the code to throw exceptions.
 
   * Predictable exception, that is the exception manually thrown by
@@ -64,8 +64,130 @@ _Utility-framework-springboot_ provides three major functions.
 
 
 ## Quick Start
-  todo
+  ### Increasing Maven dependency
+First, you need to `utility-spring-boot-starter` Maven dependent on added to
+your project `pom.xml` file:
+```xml
+        <dependency>
+            <groupId>io.github.rovingsea.utilityframework</groupId>
+            <artifactId>utility-spring-boot-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+```
+  ### Configuration response
+Second, you need to implement two interfaces,
+`ControllerReturnResponse` and `ControllerExceptionResponse`, as bean:
+  #### Configuration bean
+```java
+@Configuration
+public class ControllerResponseConfiguration {
 
+    @Bean
+    public ControllerExceptionResponse controllerExceptionResponse() {
+        return new SampleControllerExceptionResponse();
+    }
+
+    @Bean
+    public ControllerReturnResponse controllerReturnResponse() {
+        return new SampleControllerReturnResponse();
+    }
+
+}
+```
+  #### Configuration exception response
+```java
+public class SampleControllerExceptionResponse implements ControllerExceptionResponse {
+
+    protected Logger logger = LoggerFactory.getLogger(getClass());
+
+    static {
+        // Eagerly load the NestedExceptionUtils class to avoid classloader deadlock
+        // issues on OSGi when calling getMessage(). Reported by Don Brown; SPR-5607.
+        NestedExceptionUtils.class.getName();
+    }
+
+    @Override
+    public void setResponseBody(Map<String, Object> responseBody,
+                                Throwable throwable,
+                                HttpServletRequest request,
+                                HttpServletResponse response) {
+        Throwable rootCause = NestedExceptionUtils.getRootCause(throwable);
+        logger.error(NestedExceptionUtils.buildMessage(throwable.getMessage(), rootCause));
+        UtilityException exception = (UtilityException) throwable;
+        responseBody.put("code", exception.getCode());
+        responseBody.put("message", exception.getMessage());
+    }
+
+    @Override
+    public void setResponseHeader(Map<String, String> responseHeader,
+                                  Throwable throwable,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response) {
+        ControllerExceptionResponse.super
+                .setResponseHeader(responseHeader, throwable, request, response);
+    }
+}
+```
+#### Configuration normal response
+```java
+public class SampleControllerReturnResponse implements ControllerReturnResponse {
+
+    @Override
+    public void setResponseBody(Map<String, Object> responseBody, Object returnValue,
+                                ServerHttpRequest request, ServerHttpResponse response) {
+        responseBody.put("code", 200000);
+        responseBody.put("message", "success");
+        responseBody.put("data", returnValue);
+        responseBody.put("time", new Date());
+
+    }
+
+    @Override
+    public void setResponseHeader(Map<String, String> responseHeader, Object returnValue,
+                                  ServerHttpRequest request, ServerHttpResponse response) {
+        ControllerReturnResponse.super.setResponseHeader(responseHeader, returnValue, request, response);
+    }
+}
+```
+### Injection validator
+Last, use `@Validator` and `@ValidateMapping` to complete path binding
+and injection validator.
+
+For example, there is such a controller:
+```java
+@RestController
+@RequestMapping("/sample")
+public class SampleController {
+
+  @GetMapping("/object")
+  public Object object(@RequestBody SampleEntity sample) {
+    SampleEntity sampleEntity = new SampleEntity();
+    sampleEntity.setName(sample.getName());
+    sampleEntity.setAge(sample.getAge());
+    return sampleEntity;
+  }
+  
+}
+```
+
+Suppose you need to validate the `name` and `age` of `SampleEntity`,
+then you can do this:
+```java
+@Validator("/sample")
+public class SampleValidator {
+
+    @ValidateMapping("/object")
+    public void object(@RequestBody SampleEntity sample) {
+        if (sample.getAge() > 150 || sample.getAge() < 0) {
+            throw new BadRequestException(400001, "The age is incorrect");
+        }
+        if (StringUtils.isEmpty(sample.getName())) {
+            throw new BadRequestException(400002, "The name is incorrect");
+        }
+    }
+
+}
+```
 ## Contributing
   todo
 
