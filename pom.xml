@@ -42,6 +42,7 @@
     <modules>
         <module>utility-spring-boot-core</module>
         <module>utility-spring-boot-sample</module>
+        <module>utility-spring-boot-stater</module>
     </modules>
 
     <properties>

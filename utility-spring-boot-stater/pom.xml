@@ -11,9 +11,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>utility-spring-boot-sample</artifactId>
+    <artifactId>utility-spring-boot-starter</artifactId>
 
-    <name>utility-spring-boot-sample ${project.version}</name>
+    <name>utility-spring-boot-starter ${project.version}</name>
     <url>https://github.com/RovingSea/utility-framework-springboot</url>
 
     <properties>
@@ -24,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.rovingsea.utilityframework</groupId>
-            <artifactId>utility-spring-boot-starter</artifactId>
+            <artifactId>utility-spring-boot-core</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
