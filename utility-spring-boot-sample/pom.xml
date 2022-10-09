@@ -5,12 +5,16 @@
     <parent>
         <artifactId>utility-spring-boot</artifactId>
         <groupId>io.github.rovingsea.utilityframework</groupId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+
+    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>utility-spring-boot-sample</artifactId>
 
-    <modelVersion>4.0.0</modelVersion>
+    <name>utility-spring-boot-sample ${project.version}</name>
+    <url>https://github.com/RovingSea/utility-framework-springboot</url>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
