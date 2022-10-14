@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
  * @author Haixin Wu
  * @since 1.0.0
  */
-public abstract class UtilityException extends RuntimeException {
+public class UtilityException extends RuntimeException {
 
     /**
      * It can be customized by programmers, but it should be a detailed description of
@@ -35,10 +35,18 @@ public abstract class UtilityException extends RuntimeException {
      * </ul>
      */
     protected final String message;
+    protected final HttpStatus httpStatus;
 
     public UtilityException(int code, String message) {
         this.code = code;
         this.message = message;
+        this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+
+    public UtilityException(int code, String message, HttpStatus httpStatus) {
+        this.code = code;
+        this.message = message;
+        this.httpStatus = httpStatus;
     }
 
     public int getCode() {
@@ -49,4 +57,9 @@ public abstract class UtilityException extends RuntimeException {
     public String getMessage() {
         return message;
     }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
 }

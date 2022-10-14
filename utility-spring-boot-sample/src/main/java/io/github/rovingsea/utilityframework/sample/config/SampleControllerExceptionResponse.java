@@ -26,22 +26,21 @@ public class SampleControllerExceptionResponse implements ControllerExceptionRes
 
     @Override
     public void setResponseBody(Map<String, Object> responseBody,
-                                Throwable throwable,
+                                UtilityException e,
                                 HttpServletRequest request,
                                 HttpServletResponse response) {
-        Throwable rootCause = NestedExceptionUtils.getRootCause(throwable);
-        logger.error(NestedExceptionUtils.buildMessage(throwable.getMessage(), rootCause));
-        UtilityException exception = (UtilityException) throwable;
-        responseBody.put("code", exception.getCode());
-        responseBody.put("message", exception.getMessage());
+        Throwable rootCause = NestedExceptionUtils.getRootCause(e);
+        logger.error(NestedExceptionUtils.buildMessage(e.getMessage(), rootCause));
+        responseBody.put("code", e.getCode());
+        responseBody.put("message", e.getMessage());
     }
 
     @Override
     public void setResponseHeader(Map<String, String> responseHeader,
-                                  Throwable throwable,
+                                  UtilityException e,
                                   HttpServletRequest request,
                                   HttpServletResponse response) {
         ControllerExceptionResponse.super
-                .setResponseHeader(responseHeader, throwable, request, response);
+                .setResponseHeader(responseHeader, e, request, response);
     }
 }

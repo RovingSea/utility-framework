@@ -1,7 +1,6 @@
 package io.github.rovingsea.utilityframework.core.response;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import io.github.rovingsea.utilityframework.core.exception.UtilityException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,11 +16,11 @@ public interface ControllerExceptionResponse {
     /**
      * Setting response-body
      * @param responseBody response-body
-     * @param throwable exception occurs in the controller
+     * @param e exception occurs in the controller
      * @param request entire request object
      * @param response entire response object
      */
-    default void setResponseBody(Map<String, Object> responseBody, Throwable throwable,
+    default void setResponseBody(Map<String, Object> responseBody, UtilityException e,
                                  HttpServletRequest request, HttpServletResponse response) {
 
     }
@@ -29,18 +28,13 @@ public interface ControllerExceptionResponse {
     /**
      * Setting response-header
      * @param responseHeader response-header
-     * @param throwable exception occurs in the controller
+     * @param e exception occurs in the controller
      * @param request entire request object
      * @param response entire response object
      */
-    default void setResponseHeader(Map<String, String> responseHeader, Throwable throwable,
+    default void setResponseHeader(Map<String, String> responseHeader, UtilityException e,
                                    HttpServletRequest request, HttpServletResponse response) {
-        ResponseStatus annotation = throwable.getClass().getAnnotation(ResponseStatus.class);
-        if (annotation != null) {
-            response.setStatus(annotation.value().value());
-            return;
-        }
-        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.setStatus(e.getHttpStatus().value());
     }
 
 }
