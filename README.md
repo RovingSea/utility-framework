@@ -1,5 +1,5 @@
-
 # Utility-framework-springboot: *S*caffold to *E*nhance and *D*ecouple _Controller_
+
 [![projectName](https://img.shields.io/badge/Utilityframework-Springboot-brightgreen)](https://github.com/RovingSea/utility-framework-springboot)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
@@ -7,189 +7,163 @@
 
 ## What does it do
 
-_Utility-framework-springboot_ is an easy-to-use framework 
-designed to help programmers focus on response, validating
-parameters and exception management and handling, 
-rather than just staying at the three-tier design of 
-controller, service and mapper.
+_Utility-framework-springboot_ is an easy-to-use framework designed to help programmers focus on response, validating
+parameters and exception management and handling, rather than just staying at the three-tier design of controller,
+service and mapper.
 
 _Utility-framework-springboot_ provides three major functions.
 
 * **Response**
 
-  Replacing encapsulation with configuration, and the response
-  header and response body are uniformly configured.
+  Replacing encapsulation with configuration, and the response header and response body are uniformly configured.
 
-  In addition, this also supports to configure the response
-  in case of exception.
+  In addition, this also supports to configure the response in case of exception.
 
 * **Validating parameter**
 
-  This function is extracted separately as a hierarchical module
-  to avoid coupling the Controller module with any method to achieve
-  the parameter verification function.
+  This function is extracted separately as a hierarchical module to avoid coupling the Controller module with any method
+  to achieve the parameter verification function.
 
-  The use method is similar to that of Spring MVC,
-  basically, there is no cost of learning
+  The use method is similar to that of Spring MVC, basically, there is no cost of learning
 
-  This enhances the function of the original Controller module,
-  increases the programmer's attention to the parameter verification
-  function, and reduces the complexity and maintenance cost of the
-  Controller module through _Utility-framework-springboot_
+  This enhances the function of the original Controller module, increases the programmer's attention to the parameter
+  verification function, and reduces the complexity and maintenance cost of the Controller module through _
+  Utility-framework-springboot_
 
 * **Exception management and handling**
 
-  Replacing try/catch with AOP, and uniformly manage and handle
-  exceptions of application layer and business layer.
+  Replacing try/catch with AOP, and uniformly manage and handle exceptions of application layer and business layer.
 
-  This is similar to throwing garbage in life.
-  How will garbage be dealt with in the end will not be related 
-  to what we are busy with.
+  This is similar to throwing garbage in life. How will garbage be dealt with in the end will not be related to what we
+  are busy with.
 
-  After using, programmers only need to keep the concept of predictability
-  and unpredictability in the code to throw exceptions.
+  After using, programmers only need to keep the concept of predictability and unpredictability in the code to throw
+  exceptions.
 
-  * Predictable exception, that is the exception manually thrown by
-    the programmer in response to an abnormal situation. 
+    * Predictable exception, that is the exception manually thrown by the programmer in response to an abnormal
+      situation.
 
-    When an exception is thrown, the response will be returned based on
-    the response configuration, the content and the exception code defined
-    by the programmer.
+      When an exception is thrown, the response will be returned based on the response configuration, the content and
+      the exception code defined by the programmer.
 
-  * Unpredictable exception(Bug), that is an exception that the programmer
-    didn't notice was thrown during the code running.
-    _Utility-framework-springboot_ exception module will set
-    the response code to 500 and the corresponding response body by default, 
-    which also supports the programmer to manually configure.
-
+    * Unpredictable exception(Bug), that is an exception that the programmer didn't notice was thrown during the code
+      running.
+      _Utility-framework-springboot_ exception module will set the response code to 500 and the corresponding response
+      body by default, which also supports the programmer to manually configure.
 
 ## Quick Start
-  ### Increasing Maven dependency
-First, you need to `utility-spring-boot-starter` Maven dependent on added to
-your project `pom.xml` file:
+
+### Increasing Maven dependency
+
+First, you need to `utility-spring-boot-starter` Maven dependent on added to your project `pom.xml` file:
+
 ```xml
-        <dependency>
-            <groupId>io.github.rovingsea.utilityframework</groupId>
-            <artifactId>utility-spring-boot-starter</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+
+<dependency>
+    <groupId>io.github.rovingsea.utilityframework</groupId>
+    <artifactId>utility-spring-boot-starter</artifactId>
+    <version>1.0.0</version>
+</dependency>
 ```
-  ### Configuration response
+
+### Configuration response
+
 Second, you need to implement two interfaces,
 `ControllerReturnResponse` and `ControllerExceptionResponse`, as bean:
-  #### Configuration bean
+
 ```java
+
 @Configuration
 public class ControllerResponseConfiguration {
 
     @Bean
     public ControllerExceptionResponse controllerExceptionResponse() {
-        return new SampleControllerExceptionResponse();
+        return new ControllerExceptionResponse() {
+
+            private final Logger logger = LoggerFactory.getLogger(getClass());
+
+            @Override
+            public void setResponseBody(Map<String, Object> responseBody, UtilityException e, HttpServletRequest request, HttpServletResponse response) {
+                Throwable rootCause = NestedExceptionUtils.getRootCause(e);
+                logger.error(NestedExceptionUtils.buildMessage(e.getMessage(), rootCause));
+                responseBody.put("code", e.getCode());
+                responseBody.put("message", e.getMessage());
+            }
+
+            @Override
+            public void setResponseHeader(Map<String, String> responseHeader, UtilityException e, HttpServletRequest request, HttpServletResponse response) {
+                ControllerExceptionResponse.super.setResponseHeader(responseHeader, e, request, response);
+            }
+        };
     }
 
     @Bean
     public ControllerReturnResponse controllerReturnResponse() {
-        return new SampleControllerReturnResponse();
+        return new ControllerReturnResponse() {
+            @Override
+            public void setResponseBody(Map<String, Object> responseBody, Object returnValue, ServerHttpRequest request, ServerHttpResponse response) {
+                responseBody.put("code", 200000);
+                responseBody.put("message", "success");
+                responseBody.put("data", returnValue);
+                responseBody.put("time", new Date());
+            }
+
+            @Override
+            public void setResponseHeader(Map<String, String> responseHeader, Object returnValue, ServerHttpRequest request, ServerHttpResponse response) {
+                ControllerReturnResponse.super.setResponseHeader(responseHeader, returnValue, request, response);
+            }
+        };
     }
 
 }
 ```
-  #### Configuration exception response
-```java
-public class SampleControllerExceptionResponse implements ControllerExceptionResponse {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-
-    static {
-        // Eagerly load the NestedExceptionUtils class to avoid classloader deadlock
-        // issues on OSGi when calling getMessage(). Reported by Don Brown; SPR-5607.
-        NestedExceptionUtils.class.getName();
-    }
-
-    @Override
-    public void setResponseBody(Map<String, Object> responseBody,
-                                Throwable throwable,
-                                HttpServletRequest request,
-                                HttpServletResponse response) {
-        Throwable rootCause = NestedExceptionUtils.getRootCause(throwable);
-        logger.error(NestedExceptionUtils.buildMessage(throwable.getMessage(), rootCause));
-        UtilityException exception = (UtilityException) throwable;
-        responseBody.put("code", exception.getCode());
-        responseBody.put("message", exception.getMessage());
-    }
-
-    @Override
-    public void setResponseHeader(Map<String, String> responseHeader,
-                                  Throwable throwable,
-                                  HttpServletRequest request,
-                                  HttpServletResponse response) {
-        ControllerExceptionResponse.super
-                .setResponseHeader(responseHeader, throwable, request, response);
-    }
-}
-```
-#### Configuration normal response
-```java
-public class SampleControllerReturnResponse implements ControllerReturnResponse {
-
-    @Override
-    public void setResponseBody(Map<String, Object> responseBody, Object returnValue,
-                                ServerHttpRequest request, ServerHttpResponse response) {
-        responseBody.put("code", 200000);
-        responseBody.put("message", "success");
-        responseBody.put("data", returnValue);
-        responseBody.put("time", new Date());
-
-    }
-
-    @Override
-    public void setResponseHeader(Map<String, String> responseHeader, Object returnValue,
-                                  ServerHttpRequest request, ServerHttpResponse response) {
-        ControllerReturnResponse.super.setResponseHeader(responseHeader, returnValue, request, response);
-    }
-}
-```
 ### Injection validator
-Last, use `@Validator` and `@ValidateMapping` to complete path binding
-and injection validator.
+
+Last, use `@Validator` and `@ValidateMapping` to complete path binding and injection validator.
 
 For example, there is such a controller:
+
 ```java
+
 @RestController
 @RequestMapping("/sample")
 public class SampleController {
 
-  @GetMapping("/object")
-  public Object object(@RequestBody SampleEntity sample) {
-    SampleEntity sampleEntity = new SampleEntity();
-    sampleEntity.setName(sample.getName());
-    sampleEntity.setAge(sample.getAge());
-    return sampleEntity;
-  }
-  
+    @GetMapping("/object")
+    public Object object(@RequestBody SampleEntity sample) {
+        SampleEntity sampleEntity = new SampleEntity();
+        sampleEntity.setName(sample.getName());
+        sampleEntity.setAge(sample.getAge());
+        return sampleEntity;
+    }
+
 }
 ```
 
-Suppose you need to validate the `name` and `age` of `SampleEntity`,
-then you can do this:
+Suppose you need to validate the `name` and `age` of `SampleEntity`, then you can do this:
+
 ```java
+
 @Validator("/sample")
 public class SampleValidator {
 
     @ValidateMapping("/object")
     public void object(@RequestBody SampleEntity sample) {
         if (sample.getAge() > 150 || sample.getAge() < 0) {
-            throw new BadRequestException(400001, "The age is incorrect");
+            Throw.badRequest(SampleErrorCode.AGE_INCORRECTNESS);
         }
         if (StringUtils.isEmpty(sample.getName())) {
-            throw new BadRequestException(400002, "The name is incorrect");
+            Throw.badRequest(SampleErrorCode.NAME_INCORRECTNESS);
         }
     }
 
 }
 ```
+
 ## Contributing
-  todo
+
+todo
 
 ## Contact
 
