@@ -1,5 +1,6 @@
 package io.github.rovingsea.utilityframework.core.validator;
 
+import io.github.rovingsea.utilityframework.core.MappingInvokerAspect;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
