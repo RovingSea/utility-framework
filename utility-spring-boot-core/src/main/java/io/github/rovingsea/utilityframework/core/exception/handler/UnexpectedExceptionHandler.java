@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  * Except for spring exceptions and {@link UtilityException},
  * other exceptions will be handled by it.
+ *
  * @author Haixin Wu
  * @since 1.0.0
  */
@@ -38,6 +39,7 @@ public class UnexpectedExceptionHandler extends AbstractExceptionHandler {
                          Throwable throwable) {
         Throwable rootCause = NestedExceptionUtils.getRootCause(throwable);
         logger.error(NestedExceptionUtils.buildMessage(throwable.getMessage(), rootCause));
+        throwable.printStackTrace();
         responseBody.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
         responseBody.put("message", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());

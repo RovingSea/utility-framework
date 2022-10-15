@@ -5,6 +5,8 @@ import io.github.rovingsea.utilityframework.core.exception.handler.SpringExcepti
 import io.github.rovingsea.utilityframework.core.exception.handler.UnexpectedExceptionHandler;
 import io.github.rovingsea.utilityframework.core.exception.handler.UtilityExceptionHandler;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -21,6 +23,7 @@ import java.util.Map;
  * @author Haixin Wu
  * @since 1.0.0
  */
+@RestControllerAdvice
 public class ExceptionDispatcher {
 
     private final ApplicationContext context;
@@ -35,6 +38,7 @@ public class ExceptionDispatcher {
      * @param throwable exception occurred in the Controller
      * @return response-body
      */
+    @ExceptionHandler
     public HandlingExceptionResult doDispatch(Throwable throwable) {
         AbstractExceptionHandler exceptionHandler = getExceptionHandler(throwable);
         Map<String, Object> responseBody = newResponseBody();

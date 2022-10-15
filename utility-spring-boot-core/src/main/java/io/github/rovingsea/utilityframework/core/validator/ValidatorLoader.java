@@ -1,7 +1,9 @@
 package io.github.rovingsea.utilityframework.core.validator;
 
 import io.github.rovingsea.utilityframework.core.MappingInvokerAspect;
+import io.github.rovingsea.utilityframework.core.UtilityContextException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
@@ -89,8 +91,13 @@ public class ValidatorLoader {
         return this.validatePaths;
     }
 
-    public Map<String, ValidatorInvoker> getValidatorMethodMap() {
-        return this.validatorMethodMap;
+    public ValidatorInvoker getValidatorInvoker(String requestURI) {
+        String uri = this.validatePaths.stream().filter(requestURI::contains).findAny().orElse(null);
+        if (StringUtils.isEmpty(uri)) {
+            throw new UtilityContextException("The verification " +
+                    "path does not match a verification method");
+        }
+        return this.validatorMethodMap.get(uri);
     }
 
 }
