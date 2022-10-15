@@ -1,17 +1,23 @@
 package io.github.rovingsea.utilityframework.sample.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- *
  * @author Haixin Wu
  * @since 1.0.0
  */
 @Data
-public class SampleEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student {
+
+    private int id;
 
     private String name;
 
     private int age;
 
 }
+
