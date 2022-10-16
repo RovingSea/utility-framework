@@ -22,7 +22,6 @@ public class UtilityException extends RuntimeException {
      * </ul>
      */
     protected final int code;
-
     /**
      * It can be customized by programmers, but it should be a detailed description of
      * {@link HttpStatus#getReasonPhrase()} and it will be set to the request body <br>
@@ -35,6 +34,10 @@ public class UtilityException extends RuntimeException {
      * </ul>
      */
     protected final String message;
+    /**
+     * It can be customized by programmers,
+     * and its value will be used in the response header of the response.
+     */
     protected final HttpStatus httpStatus;
 
     public UtilityException(int code, String message) {
