@@ -60,7 +60,18 @@ public abstract class Throw {
      */
     public static void exception(Enum<? extends BaseEnum> en, HttpStatus httpStatus) {
         BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        throw new UtilityException(baseEnum.getCode(), baseEnum.getMessage(), httpStatus);
+        exception(baseEnum.getCode(), baseEnum.getMessage(), httpStatus);
+    }
+
+    /**
+     * Throw an exception, and the response code determined by parameter httpStatus.
+     *
+     * @param code       exception code in the response body
+     * @param message    exception message in the response body
+     * @param httpStatus the response code
+     */
+    public static void exception(int code, String message, HttpStatus httpStatus) {
+        throw new UtilityException(code, message, httpStatus);
     }
 
     // 1xx Informational
