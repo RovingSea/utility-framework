@@ -128,14 +128,19 @@ For example, there is such a controller:
 
 @RestController
 @RequestMapping("/sample")
-public class SampleController {
+public class StudentController {
 
-    @GetMapping("/object")
-    public Object object(@RequestBody SampleEntity sample) {
-        SampleEntity sampleEntity = new SampleEntity();
-        sampleEntity.setName(sample.getName());
-        sampleEntity.setAge(sample.getAge());
-        return sampleEntity;
+    @Autowired
+    private StudentService studentService;
+
+    @RequestMapping("/queryStudentById/{id}")
+    public Student queryStudentById(@PathVariable int id) {
+        return studentService.getStudentById(id);
+    }
+
+    @RequestMapping("/queryStudentsByAge/{age}")
+    public List<Student> queryStudentsByAge(@PathVariable int age) {
+        return studentService.getStudentsByAge(age);
     }
 
 }
@@ -146,19 +151,24 @@ Suppose you need to validate the `name` and `age` of `SampleEntity`, then you ca
 ```java
 
 @Validator("/sample")
-public class SampleValidator {
+public class StudentValidator {
 
-    @ValidateMapping("/object")
-    public void object(@RequestBody SampleEntity sample) {
-        if (sample.getAge() > 150 || sample.getAge() < 0) {
-            Throw.badRequest(SampleErrorCode.AGE_INCORRECTNESS);
+    @ValidateMapping("/queryStudentById")
+    public void queryStudentById(int id) {
+        if (id < 0) {
+            Throw.badRequest(StudentError.QUERY_BY_ID);
         }
-        if (StringUtils.isEmpty(sample.getName())) {
-            Throw.badRequest(SampleErrorCode.NAME_INCORRECTNESS);
+    }
+
+    @ValidateMapping("/queryStudentsByAge")
+    public void queryStudentsByAge(int age) {
+        if (age < 0 || age > 150) {
+            Throw.badRequest(StudentError.QUERY_BY_AGE);
         }
     }
 
 }
+
 ```
 
 ## Contributing
