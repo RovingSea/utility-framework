@@ -1,6 +1,9 @@
 package io.github.rovingsea.utilityframework.core.response;
 
 import io.github.rovingsea.utilityframework.core.exception.UtilityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.NestedExceptionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +16,7 @@ import java.util.Map;
  */
 public interface ControllerExceptionResponse {
 
+    Logger logger = LoggerFactory.getLogger(ControllerExceptionResponse.class);
     /**
      * Setting response-body
      * @param responseBody response-body
@@ -22,7 +26,10 @@ public interface ControllerExceptionResponse {
      */
     default void setResponseBody(Map<String, Object> responseBody, UtilityException e,
                                  HttpServletRequest request, HttpServletResponse response) {
-
+        Throwable rootCause = NestedExceptionUtils.getRootCause(e);
+        logger.error(NestedExceptionUtils.buildMessage(e.getMessage(), rootCause));
+        responseBody.put("code", e.getCode());
+        responseBody.put("message", e.getMessage());
     }
 
     /**

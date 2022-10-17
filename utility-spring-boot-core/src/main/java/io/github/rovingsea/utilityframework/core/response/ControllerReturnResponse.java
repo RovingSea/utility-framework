@@ -4,6 +4,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Controller;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -27,7 +28,10 @@ public interface ControllerReturnResponse {
      */
     default void setResponseBody(Map<String, Object> responseBody, Object returnValue,
                                  ServerHttpRequest request, ServerHttpResponse response) {
-
+        responseBody.put("code", 200000);
+        responseBody.put("message", "success");
+        responseBody.put("data", returnValue);
+        responseBody.put("time", new Date());
     }
 
     /**
