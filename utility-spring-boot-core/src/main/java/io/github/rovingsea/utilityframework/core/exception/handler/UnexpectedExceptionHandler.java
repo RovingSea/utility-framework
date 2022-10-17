@@ -38,7 +38,8 @@ public class UnexpectedExceptionHandler extends AbstractExceptionHandler {
                          HttpServletRequest request, HttpServletResponse response,
                          Throwable throwable) {
         Throwable rootCause = NestedExceptionUtils.getRootCause(throwable);
-        logger.error(NestedExceptionUtils.buildMessage(throwable.getMessage(), rootCause));
+        logger.error("This is a bug, please fix it in time:\n{}",
+                NestedExceptionUtils.buildMessage(throwable.getMessage(), rootCause));
         throwable.printStackTrace();
         responseBody.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
         responseBody.put("message", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
