@@ -56,11 +56,14 @@ public class SpringExceptionHandler extends AbstractExceptionHandler {
             responseBody.put("code", HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
             responseBody.put("message", HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase());
             response.setStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
-        }
-        if (throwable instanceof HttpRequestMethodNotSupportedException) {
+        } else if (throwable instanceof HttpRequestMethodNotSupportedException) {
             responseBody.put("code", HttpStatus.METHOD_NOT_ALLOWED.value());
             responseBody.put("message", HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase());
             response.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
+        } else {
+            responseBody.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            responseBody.put("message", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
 }
