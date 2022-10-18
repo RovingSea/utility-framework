@@ -3,7 +3,6 @@ package io.github.rovingsea.utilityframework.core.exception;
 import io.github.rovingsea.utilityframework.core.response.ControllerResponseAdvice;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,20 +19,24 @@ public class HandlingExceptionResult implements Serializable {
 
     private final Map<String, Object> responseBody;
 
-    public HandlingExceptionResult() {
-        responseBody = new HashMap<>();
-    }
+    private final Map<String, String> responseHeader;
 
-    public HandlingExceptionResult(Map<String, Object> responseBody) {
+    public HandlingExceptionResult(Map<String, Object> responseBody, Map<String, String> responseHeader) {
         this.responseBody = responseBody;
+        this.responseHeader = responseHeader;
     }
 
-    public static HandlingExceptionResult init(Map<String, Object> responseBody) {
-        return new HandlingExceptionResult(responseBody);
+    public static HandlingExceptionResult init(Map<String, Object> responseBody,
+                                               Map<String, String> responseHeader) {
+        return new HandlingExceptionResult(responseBody, responseHeader);
     }
 
     public Map<String, Object> getResponseBody() {
         return responseBody;
+    }
+
+    public Map<String, String> getResponseHeader() {
+        return responseHeader;
     }
 
     @Override

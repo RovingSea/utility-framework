@@ -66,6 +66,8 @@ public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
         Map<String, String> responseHeader = new LinkedHashMap<>();
         if (body instanceof HandlingExceptionResult) {
             responseBody = ((HandlingExceptionResult) body).getResponseBody();
+            responseHeader = ((HandlingExceptionResult) body).getResponseHeader();
+            response.getHeaders().setAll(responseHeader);
             return JSON.toJSON(responseBody);
         }
         this.controllerReturnResponse.setResponseBody(responseBody, body, request, response);

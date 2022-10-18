@@ -47,7 +47,7 @@ public class ExceptionDispatcher {
         HttpServletResponse response = getHttpServletResponse();
         exceptionHandler.doHandle(responseBody, responseHeader, request, response, throwable);
         exceptionHandler.setResponseHeader(responseHeader, response);
-        return HandlingExceptionResult.init(responseBody);
+        return HandlingExceptionResult.init(responseBody, responseHeader);
     }
 
     /**
