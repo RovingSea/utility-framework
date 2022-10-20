@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.core.exception;
 
-import io.github.rovingsea.utilityframework.core.Throw;
+import io.github.rovingsea.utilityframework.core.utils.Throw;
 import io.github.rovingsea.utilityframework.core.exception.handler.UtilityExceptionHandler;
 import org.springframework.http.HttpStatus;
 

@@ -1,4 +1,4 @@
-package io.github.rovingsea.utilityframework.core;
+package io.github.rovingsea.utilityframework.core.utils;
 
 import io.github.rovingsea.utilityframework.core.exception.BaseEnum;
 import io.github.rovingsea.utilityframework.core.exception.ExceptionDispatcher;

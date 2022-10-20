@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.sample.validator;
 
-import io.github.rovingsea.utilityframework.core.Throw;
+import io.github.rovingsea.utilityframework.core.utils.Throw;
 import io.github.rovingsea.utilityframework.core.validator.ValidateMapping;
 import io.github.rovingsea.utilityframework.core.validator.Validator;
 import io.github.rovingsea.utilityframework.sample.exception.StudentError;
