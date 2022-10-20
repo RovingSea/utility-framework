@@ -29,8 +29,12 @@ public class ValidatorInvoker {
         this.method = method;
     }
 
-    public Object invoke(Object... args) throws InvocationTargetException, IllegalAccessException {
-        return this.method.invoke(getValidator(), args);
+    public Object invoke(Object... args) throws Throwable {
+        try {
+            return this.method.invoke(getValidator(), args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw e.getCause();
+        }
     }
 
     public Object getValidator() {
