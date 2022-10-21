@@ -9,7 +9,7 @@ import io.github.rovingsea.utilityframework.sample.exception.StudentError;
  * @author Haixin Wu
  * @since 1.0.0
  */
-@Validator("/sample")
+@Validator("/student")
 public class StudentValidator {
 
     @ValidateMapping("/queryStudentById")
