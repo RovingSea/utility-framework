@@ -127,7 +127,7 @@ For example, there is such a controller:
 ```java
 
 @RestController
-@RequestMapping("/sample")
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
@@ -150,7 +150,7 @@ Suppose you need to validate the `name` and `age` of `SampleEntity`, then you ca
 
 ```java
 
-@Validator("/sample")
+@Validator("/student")
 public class StudentValidator {
 
     @ValidateMapping("/queryStudentById")
