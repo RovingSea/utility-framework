@@ -76,7 +76,6 @@ public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
         }
         this.controllerReturnResponse.setResponseBody(responseBody, body, request, response);
         this.controllerReturnResponse.setResponseHeader(responseHeader, body, request, response);
-        response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setAll(responseHeader);
         return body instanceof String ? JSON.toJSONString(responseBody) : JSON.toJSON(responseBody);
     }
