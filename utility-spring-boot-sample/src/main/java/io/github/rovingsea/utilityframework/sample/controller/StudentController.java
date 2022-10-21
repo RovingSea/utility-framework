@@ -14,7 +14,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/sample")
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
