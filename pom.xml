@@ -5,22 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
     <inceptionYear>2022</inceptionYear>
     <groupId>io.github.rovingsea.utilityframework</groupId>
-    <artifactId>utility-spring-boot</artifactId>
+    <artifactId>utilityframework</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>Utility Framework Springboot ${revision}</name>
-    <description>Top Utility Framework Springboot pom.xml file</description>
-    <url>https://github.com/RovingSea/utility-framework-springboot</url>
+    <name>Utility Framework ${revision}</name>
+    <description>Top Utility Framework pom.xml file</description>
+    <url>https://github.com/RovingSea/utility-framework</url>
     <prerequisites>
         <maven>3.6.3</maven>
     </prerequisites>
 
     <scm>
-        <url>git@github.com:RovingSea/utility-framework-springboot.git</url>
-        <connection>scm:git@github.com:RovingSea/utility-framework-springboot.git</connection>
-        <developerConnection>scm:git@github.com:RovingSea/utility-framework-springboot.git</developerConnection>
-        <tag>utility-framework-springboot-all-${revision}</tag>
+        <url>git@github.com:RovingSea/utility-framework.git</url>
+        <connection>scm:git@github.com:RovingSea/utility-framework.git</connection>
+        <developerConnection>scm:git@github.com:RovingSea/utility-framework.git</developerConnection>
+        <tag>utility-framework-all-${revision}</tag>
     </scm>
 
     <developers>

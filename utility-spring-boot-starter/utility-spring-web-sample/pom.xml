@@ -14,7 +14,7 @@
     <artifactId>utility-spring-web-sample</artifactId>
 
     <name>utility-spring-web-sample ${project.version}</name>
-    <url>https://github.com/RovingSea/utility-framework-springboot</url>
+    <url>https://github.com/RovingSea/utility-framework</url>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

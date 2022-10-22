@@ -14,7 +14,7 @@
     <artifactId>utility-spring-web-contrast</artifactId>
 
     <name>utility-spring-web-contrast ${project.version}</name>
-    <url>https://github.com/RovingSea/utility-framework-springboot</url>
+    <url>https://github.com/RovingSea/utility-framework</url>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

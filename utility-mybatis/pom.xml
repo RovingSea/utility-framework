@@ -3,13 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>utility-spring-boot</artifactId>
         <groupId>io.github.rovingsea.utilityframework</groupId>
-        <version>1.0.0</version>
+        <artifactId>utilityframework</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>utility-mybatis</artifactId>
+
+    <name>utility-mybatis ${project.version}</name>
+    <url>https://github.com/RovingSea/utility-framework</url>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
