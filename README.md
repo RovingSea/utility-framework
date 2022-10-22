@@ -1,181 +1,40 @@
-# Utility-framework-springboot: *S*caffold to *E*nhance and *D*ecouple _Controller_
+# Utility Framework: *实用框架*
 
-[![projectName](https://img.shields.io/badge/Utilityframework-Springboot-brightgreen)](https://github.com/RovingSea/utility-framework-springboot)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 -------
 
-## What does it do
+## 它能干嘛
 
-_Utility-framework-springboot_ is an easy-to-use framework designed to help programmers focus on response, validating
-parameters and exception management and handling, rather than just staying at the three-tier design of controller,
-service and mapper.
+_Utility Framework_ 是一个易于被使用的框架，旨在能够结合各种框架，让架构生活化、业务专一化、程序简单化，整体实用化。
 
-_Utility-framework-springboot_ provides three major functions.
+依托 Utility Framework 创建应用无需从 0 至 1 开始，只需要添加相应配置，就可以将应用搭建在各大程序员创建的地基上，借此，您只需要精心设计或选择出喜欢的瓷砖、楼梯、门窗······
 
-* **Response**
+_Utility Framework_ 目前提供了如下功能：
 
-  Replacing encapsulation with configuration, and the response header and response body are uniformly configured.
+* **WEB**
+  
+  WEB 项目往往基于 MVC 架构搭建而成，其中我们对 Controller 进行了增强和解耦，将其划分为参数校验、业务逻辑、统一响应以及全局异常捕捉。
+ 
+  **参数校验**：您只需要像使用 @Controller、@RequestMapping 注解一样使用 @Validator、@ValidateMapping 就可以完成 Controller 层的参数校验。
 
-  In addition, this also supports to configure the response in case of exception.
+  **统一响应**：您只需要实现 ControllerReturnResponse 和 ControllerExceptionResponse 接口并注入 Spring 容器中即可。
+  
+  **全局异常捕捉**：您只需要秉持预料之内和非预料之内的思想进行异常的抛出，凡是您手动抛出来的异常，我们都将其视为预料之内的异常，反之视为 BUG。其中您可以结合工具类 Throw 进行异常抛出。 
 
-* **Validating parameter**
+  **异常定制处理**：这就像干垃圾和湿垃圾的处理方式均不相同，处理时也并不会与我们的生活耦合。
 
-  This function is extracted separately as a hierarchical module to avoid coupling the Controller module with any method
-  to achieve the parameter verification function.
+* **Mybatis**
 
-  The use method is similar to that of Spring MVC, basically, there is no cost of learning
+## 快速开始
 
-  This enhances the function of the original Controller module, increases the programmer's attention to the parameter
-  verification function, and reduces the complexity and maintenance cost of the Controller module through _
-  Utility-framework-springboot_
+[快速开始](doc/快速开始.md)
 
-* **Exception management and handling**
-
-  Replacing try/catch with AOP, and uniformly manage and handle exceptions of application layer and business layer.
-
-  This is similar to throwing garbage in life. How will garbage be dealt with in the end will not be related to what we
-  are busy with.
-
-  After using, programmers only need to keep the concept of predictability and unpredictability in the code to throw
-  exceptions.
-
-    * Predictable exception, that is the exception manually thrown by the programmer in response to an abnormal
-      situation.
-
-      When an exception is thrown, the response will be returned based on the response configuration, the content and
-      the exception code defined by the programmer.
-
-    * Unpredictable exception(Bug), that is an exception that the programmer didn't notice was thrown during the code
-      running.
-      _Utility-framework-springboot_ exception module will set the response code to 500 and the corresponding response
-      body by default, which also supports the programmer to manually configure.
-
-## Quick Start
-
-### Increasing Maven dependency
-
-First, you need to `utility-spring-boot-starter` Maven dependent on added to your project `pom.xml` file:
-
-```xml
-
-<dependency>
-    <groupId>io.github.rovingsea.utilityframework</groupId>
-    <artifactId>utility-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
-
-### Configuration response
-
-Second, you need to implement two interfaces,
-`ControllerReturnResponse` and `ControllerExceptionResponse`, as bean:
-
-```java
-
-@Configuration
-public class ControllerResponseConfiguration {
-
-    @Bean
-    public ControllerExceptionResponse controllerExceptionResponse() {
-        return new ControllerExceptionResponse() {
-
-            private final Logger logger = LoggerFactory.getLogger(getClass());
-
-            @Override
-            public void setResponseBody(Map<String, Object> responseBody, UtilityException e, HttpServletRequest request, HttpServletResponse response) {
-                Throwable rootCause = NestedExceptionUtils.getRootCause(e);
-                logger.error(NestedExceptionUtils.buildMessage(e.getMessage(), rootCause));
-                responseBody.put("code", e.getCode());
-                responseBody.put("message", e.getMessage());
-            }
-
-            @Override
-            public void setResponseHeader(Map<String, String> responseHeader, UtilityException e, HttpServletRequest request, HttpServletResponse response) {
-                ControllerExceptionResponse.super.setResponseHeader(responseHeader, e, request, response);
-            }
-        };
-    }
-
-    @Bean
-    public ControllerReturnResponse controllerReturnResponse() {
-        return new ControllerReturnResponse() {
-            @Override
-            public void setResponseBody(Map<String, Object> responseBody, Object returnValue, ServerHttpRequest request, ServerHttpResponse response) {
-                responseBody.put("code", 200000);
-                responseBody.put("message", "success");
-                responseBody.put("data", returnValue);
-                responseBody.put("time", new Date());
-            }
-
-            @Override
-            public void setResponseHeader(Map<String, String> responseHeader, Object returnValue, ServerHttpRequest request, ServerHttpResponse response) {
-                ControllerReturnResponse.super.setResponseHeader(responseHeader, returnValue, request, response);
-            }
-        };
-    }
-
-}
-```
-
-### Injection validator
-
-Last, use `@Validator` and `@ValidateMapping` to complete path binding and injection validator.
-
-For example, there is such a controller:
-
-```java
-
-@RestController
-@RequestMapping("/student")
-public class StudentController {
-
-    @Autowired
-    private StudentService studentService;
-
-    @RequestMapping("/queryStudentById/{id}")
-    public Student queryStudentById(@PathVariable int id) {
-        return studentService.getStudentById(id);
-    }
-
-    @RequestMapping("/queryStudentsByAge/{age}")
-    public List<Student> queryStudentsByAge(@PathVariable int age) {
-        return studentService.getStudentsByAge(age);
-    }
-
-}
-```
-
-Suppose you need to validate the `name` and `age` of `SampleEntity`, then you can do this:
-
-```java
-
-@Validator("/student")
-public class StudentValidator {
-
-    @ValidateMapping("/queryStudentById")
-    public void queryStudentById(int id) {
-        if (id < 0) {
-            Throw.badRequest(StudentError.QUERY_BY_ID);
-        }
-    }
-
-    @ValidateMapping("/queryStudentsByAge")
-    public void queryStudentsByAge(int age) {
-        if (age < 0 || age > 150) {
-            Throw.badRequest(StudentError.QUERY_BY_AGE);
-        }
-    }
-
-}
-
-```
-
-## Contributing
+## 贡献
 
 todo
 
-## Contact
+## 联系
 
 * Email: 1262917629@qq.com
 * Wechat: rovingsea
