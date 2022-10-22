@@ -40,9 +40,8 @@
     </licenses>
 
     <modules>
-        <module>utility-spring-boot-core</module>
-        <module>utility-spring-boot-sample</module>
         <module>utility-spring-boot-starter</module>
+        <module>utility-mybatis</module>
     </modules>
 
     <properties>
