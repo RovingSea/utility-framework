@@ -18,7 +18,7 @@ import org.springframework.http.HttpStatus;
  * @author Haixin Wu
  * @since 1.0.1
  */
-public interface BaseEnum {
+public interface BaseEnum extends ExceptionPostProcessor {
 
     /**
      * The exception code accompanying the exception,
