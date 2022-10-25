@@ -40,16 +40,43 @@ public class ExpectedException extends RuntimeException {
      */
     protected final HttpStatus httpStatus;
 
+    protected final BaseEnum baseEnum;
+
+    protected final Object opinion;
+
+    public ExpectedException(BaseEnum baseEnum) {
+        this(baseEnum, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    public ExpectedException(BaseEnum baseEnum, HttpStatus httpStatus) {
+        this(baseEnum, httpStatus, null);
+    }
+
+    public ExpectedException(BaseEnum baseEnum, HttpStatus httpStatus, Object opinion) {
+        this.code = baseEnum.getCode();
+        this.message = baseEnum.getMessage();
+        this.baseEnum = baseEnum;
+        this.httpStatus = httpStatus;
+        this.opinion = opinion;
+    }
+
     public ExpectedException(int code, String message) {
-        this.code = code;
-        this.message = message;
-        this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        this(code, message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public ExpectedException(int code, String message, HttpStatus httpStatus) {
         this.code = code;
         this.message = message;
         this.httpStatus = httpStatus;
+        this.baseEnum = null;
+        this.opinion = null;
+    }
+
+    public void doProcess() {
+        if (getBaseEnum() == null || getOpinion() == null) {
+            return;
+        }
+        getBaseEnum().postProcessAfterThrow(getOpinion());
     }
 
     public int getCode() {
@@ -63,6 +90,14 @@ public class ExpectedException extends RuntimeException {
 
     public HttpStatus getHttpStatus() {
         return httpStatus;
+    }
+
+    public BaseEnum getBaseEnum() {
+        return baseEnum;
+    }
+
+    public Object getOpinion() {
+        return opinion;
     }
 
 }

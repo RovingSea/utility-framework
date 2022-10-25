@@ -16,7 +16,7 @@ public enum StudentError implements BaseEnum {
      */
     QUERY_BY_ID(400001, "id cannot be less than 0") {
         @Override
-        public void postProcessAfterThrow() {
+        public void postProcessAfterThrow(Object opinion) {
             StudentService studentService = SpringBeanUtils.getBean(StudentService.class);
             System.out.println("studentService.getStudentById(1) = " + studentService.getStudentById(1));
         }

@@ -26,6 +26,7 @@ public class ExpectedExceptionHandler extends AbstractExceptionHandler {
                          HttpServletRequest request, HttpServletResponse response,
                          Throwable throwable) {
         ExpectedException expectedException = (ExpectedException) throwable;
+        expectedException.doProcess();
         this.controllerExceptionResponse.setResponseBody(responseBody, expectedException, request, response);
         this.controllerExceptionResponse.setResponseHeader(responseHeader, expectedException, request, response);
     }

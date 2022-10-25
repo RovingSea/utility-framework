@@ -7,7 +7,7 @@ package io.github.rovingsea.utilityframework.spring.web.exception;
  */
 public interface ExceptionPostProcessor {
 
-    default void postProcessAfterThrow() {
+    default void postProcessAfterThrow(Object opinion) {
 
     }
 }
