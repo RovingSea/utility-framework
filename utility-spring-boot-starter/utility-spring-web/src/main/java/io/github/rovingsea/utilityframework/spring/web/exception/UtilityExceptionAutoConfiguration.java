@@ -2,7 +2,7 @@ package io.github.rovingsea.utilityframework.spring.web.exception;
 
 import io.github.rovingsea.utilityframework.spring.web.exception.handler.SpringExceptionHandler;
 import io.github.rovingsea.utilityframework.spring.web.exception.handler.UnexpectedExceptionHandler;
-import io.github.rovingsea.utilityframework.spring.web.exception.handler.UtilityExceptionHandler;
+import io.github.rovingsea.utilityframework.spring.web.exception.handler.ExpectedExceptionHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +31,8 @@ public class UtilityExceptionAutoConfiguration {
     }
 
     @Bean
-    public UtilityExceptionHandler utilityExceptionHandler(ApplicationContext context) {
-        return new UtilityExceptionHandler(context);
+    public ExpectedExceptionHandler utilityExceptionHandler(ApplicationContext context) {
+        return new ExpectedExceptionHandler(context);
     }
 
 }

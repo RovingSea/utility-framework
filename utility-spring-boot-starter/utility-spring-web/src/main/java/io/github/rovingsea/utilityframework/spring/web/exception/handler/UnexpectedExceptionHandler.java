@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.exception.handler;
 
-import io.github.rovingsea.utilityframework.spring.web.exception.UtilityException;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import io.github.rovingsea.utilityframework.spring.web.response.ControllerExceptionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * Except for spring exceptions and {@link UtilityException},
+ * Except for spring exceptions and {@link ExpectedException},
  * other exceptions will be handled by it.
  *
  * @author Haixin Wu

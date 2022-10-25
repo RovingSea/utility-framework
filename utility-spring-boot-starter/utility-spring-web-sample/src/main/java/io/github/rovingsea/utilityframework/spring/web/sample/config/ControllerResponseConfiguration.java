@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.sample.config;
 
-import io.github.rovingsea.utilityframework.spring.web.exception.UtilityException;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import io.github.rovingsea.utilityframework.spring.web.response.ControllerExceptionResponse;
 import io.github.rovingsea.utilityframework.spring.web.response.ControllerReturnResponse;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class ControllerResponseConfiguration {
             private final Logger logger = LoggerFactory.getLogger(getClass());
 
             @Override
-            public void setResponseBody(Map<String, Object> responseBody, UtilityException e, HttpServletRequest request, HttpServletResponse response) {
+            public void setResponseBody(Map<String, Object> responseBody, ExpectedException e, HttpServletRequest request, HttpServletResponse response) {
                 Throwable rootCause = NestedExceptionUtils.getRootCause(e);
                 logger.error(NestedExceptionUtils.buildMessage(e.getMessage(), rootCause));
                 responseBody.put("code", e.getCode());
@@ -38,7 +38,7 @@ public class ControllerResponseConfiguration {
             }
 
             @Override
-            public void setResponseHeader(Map<String, String> responseHeader, UtilityException e, HttpServletRequest request, HttpServletResponse response) {
+            public void setResponseHeader(Map<String, String> responseHeader, ExpectedException e, HttpServletRequest request, HttpServletResponse response) {
                 ControllerExceptionResponse.super.setResponseHeader(responseHeader, e, request, response);
             }
         };

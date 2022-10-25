@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.exception.handler;
 
-import io.github.rovingsea.utilityframework.spring.web.exception.UtilityException;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import io.github.rovingsea.utilityframework.spring.web.response.ControllerExceptionResponse;
 import org.springframework.context.ApplicationContext;
 
@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * Specially handle {@link UtilityException}, which will be handled in combination with
+ * Specially handle {@link ExpectedException}, which will be handled in combination with
  * the {@link ControllerExceptionResponse} provided to the programmer.
  *
  * @author Haixin Wu
  * @since 1.0.0
  */
-public class UtilityExceptionHandler extends AbstractExceptionHandler {
+public class ExpectedExceptionHandler extends AbstractExceptionHandler {
 
-    public UtilityExceptionHandler(ApplicationContext context) {
+    public ExpectedExceptionHandler(ApplicationContext context) {
         super(context.getBean(ControllerExceptionResponse.class));
     }
 
@@ -25,7 +25,8 @@ public class UtilityExceptionHandler extends AbstractExceptionHandler {
     public void doHandle(Map<String, Object> responseBody, Map<String, String> responseHeader,
                          HttpServletRequest request, HttpServletResponse response,
                          Throwable throwable) {
-        this.controllerExceptionResponse.setResponseBody(responseBody, (UtilityException) throwable, request, response);
-        this.controllerExceptionResponse.setResponseHeader(responseHeader, (UtilityException) throwable, request, response);
+        ExpectedException expectedException = (ExpectedException) throwable;
+        this.controllerExceptionResponse.setResponseBody(responseBody, expectedException, request, response);
+        this.controllerExceptionResponse.setResponseHeader(responseHeader, expectedException, request, response);
     }
 }

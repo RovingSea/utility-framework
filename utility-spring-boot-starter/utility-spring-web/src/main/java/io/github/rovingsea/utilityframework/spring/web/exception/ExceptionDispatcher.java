@@ -5,7 +5,7 @@ import io.github.rovingsea.utilityframework.spring.web.utils.HttpServletResponse
 import io.github.rovingsea.utilityframework.spring.web.exception.handler.AbstractExceptionHandler;
 import io.github.rovingsea.utilityframework.spring.web.exception.handler.SpringExceptionHandler;
 import io.github.rovingsea.utilityframework.spring.web.exception.handler.UnexpectedExceptionHandler;
-import io.github.rovingsea.utilityframework.spring.web.exception.handler.UtilityExceptionHandler;
+import io.github.rovingsea.utilityframework.spring.web.exception.handler.ExpectedExceptionHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -62,8 +62,8 @@ public class ExceptionDispatcher {
         if (throwable instanceof ServletException) {
             exceptionHandler = this.context.getBean(SpringExceptionHandler.class);
         }
-        if (throwable instanceof UtilityException) {
-            exceptionHandler = this.context.getBean(UtilityExceptionHandler.class);
+        if (throwable instanceof ExpectedException) {
+            exceptionHandler = this.context.getBean(ExpectedExceptionHandler.class);
         }
         return exceptionHandler;
     }

@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.sample.controller;
 
-import io.github.rovingsea.utilityframework.spring.web.exception.UtilityException;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +14,7 @@ public class ExceptionController {
 
     @RequestMapping("/expected")
     public void expected() {
-        throw new UtilityException(500000, "An expected exception");
+        throw new ExpectedException(500000, "An expected exception");
     }
 
     @RequestMapping("/unexpected")

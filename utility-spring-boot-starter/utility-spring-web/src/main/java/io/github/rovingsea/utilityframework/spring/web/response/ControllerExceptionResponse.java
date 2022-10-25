@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.response;
 
-import io.github.rovingsea.utilityframework.spring.web.exception.UtilityException;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedExceptionUtils;
@@ -24,7 +24,7 @@ public interface ControllerExceptionResponse {
      * @param request entire request object
      * @param response entire response object
      */
-    default void setResponseBody(Map<String, Object> responseBody, UtilityException e,
+    default void setResponseBody(Map<String, Object> responseBody, ExpectedException e,
                                  HttpServletRequest request, HttpServletResponse response) {
         Throwable rootCause = NestedExceptionUtils.getRootCause(e);
         logger.error(NestedExceptionUtils.buildMessage(e.getMessage(), rootCause));
@@ -39,7 +39,7 @@ public interface ControllerExceptionResponse {
      * @param request entire request object
      * @param response entire response object
      */
-    default void setResponseHeader(Map<String, String> responseHeader, UtilityException e,
+    default void setResponseHeader(Map<String, String> responseHeader, ExpectedException e,
                                    HttpServletRequest request, HttpServletResponse response) {
         response.setStatus(e.getHttpStatus().value());
     }

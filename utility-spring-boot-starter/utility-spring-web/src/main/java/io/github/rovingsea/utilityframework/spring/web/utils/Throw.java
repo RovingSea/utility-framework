@@ -2,7 +2,7 @@ package io.github.rovingsea.utilityframework.spring.web.utils;
 
 import io.github.rovingsea.utilityframework.spring.web.exception.BaseEnum;
 import io.github.rovingsea.utilityframework.spring.web.exception.ExceptionDispatcher;
-import io.github.rovingsea.utilityframework.spring.web.exception.UtilityException;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -23,7 +23,7 @@ import org.springframework.http.HttpStatus;
  * and then passed to the following code:
  * <pre>{@code
  *     public static void badRequest(int code, String message) {
- *         throw new UtilityException(code, message, HttpStatus.BAD_REQUEST);
+ *         throw new ExpectedException(code, message, HttpStatus.BAD_REQUEST);
  *     }
  * }</pre>
  * The above code will throw an exception containing {@link HttpStatus}
@@ -67,7 +67,7 @@ public abstract class Throw {
      * @param httpStatus the response code
      */
     public static void exception(int code, String message, HttpStatus httpStatus) {
-        throw new UtilityException(code, message, httpStatus);
+        throw new ExpectedException(code, message, httpStatus);
     }
 
     // 1xx Informational
@@ -83,7 +83,7 @@ public abstract class Throw {
     }
 
     public static void Continue(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.CONTINUE);
+        throw new ExpectedException(code, message, HttpStatus.CONTINUE);
     }
 
     /**
@@ -97,7 +97,7 @@ public abstract class Throw {
     }
 
     public static void switchingProtocols(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.SWITCHING_PROTOCOLS);
+        throw new ExpectedException(code, message, HttpStatus.SWITCHING_PROTOCOLS);
     }
 
     /**
@@ -111,7 +111,7 @@ public abstract class Throw {
     }
 
     public static void processing(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.PROCESSING);
+        throw new ExpectedException(code, message, HttpStatus.PROCESSING);
     }
 
     /**
@@ -126,7 +126,7 @@ public abstract class Throw {
     }
 
     public static void checkpoint(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.CHECKPOINT);
+        throw new ExpectedException(code, message, HttpStatus.CHECKPOINT);
     }
 
     // 2xx Success
@@ -142,7 +142,7 @@ public abstract class Throw {
     }
 
     public static void ok(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.OK);
+        throw new ExpectedException(code, message, HttpStatus.OK);
     }
 
     /**
@@ -156,7 +156,7 @@ public abstract class Throw {
     }
 
     public static void created(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.CREATED);
+        throw new ExpectedException(code, message, HttpStatus.CREATED);
     }
 
     /**
@@ -170,7 +170,7 @@ public abstract class Throw {
     }
 
     public static void accepted(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.ACCEPTED);
+        throw new ExpectedException(code, message, HttpStatus.ACCEPTED);
     }
 
     /**
@@ -184,7 +184,7 @@ public abstract class Throw {
     }
 
     public static void nonAuthoritativeInformation(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+        throw new ExpectedException(code, message, HttpStatus.NON_AUTHORITATIVE_INFORMATION);
     }
 
     /**
@@ -198,7 +198,7 @@ public abstract class Throw {
     }
 
     public static void noContent(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.NO_CONTENT);
+        throw new ExpectedException(code, message, HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -212,7 +212,7 @@ public abstract class Throw {
     }
 
     public static void resetContent(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.RESET_CONTENT);
+        throw new ExpectedException(code, message, HttpStatus.RESET_CONTENT);
     }
 
     /**
@@ -226,7 +226,7 @@ public abstract class Throw {
     }
 
     public static void partialContent(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.PARTIAL_CONTENT);
+        throw new ExpectedException(code, message, HttpStatus.PARTIAL_CONTENT);
     }
 
     /**
@@ -240,7 +240,7 @@ public abstract class Throw {
     }
 
     public static void multiStatus(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.MULTI_STATUS);
+        throw new ExpectedException(code, message, HttpStatus.MULTI_STATUS);
     }
 
     /**
@@ -254,7 +254,7 @@ public abstract class Throw {
     }
 
     public static void alreadyReported(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.ALREADY_REPORTED);
+        throw new ExpectedException(code, message, HttpStatus.ALREADY_REPORTED);
     }
 
     /**
@@ -268,7 +268,7 @@ public abstract class Throw {
     }
 
     public static void imUsed(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.IM_USED);
+        throw new ExpectedException(code, message, HttpStatus.IM_USED);
     }
 
     // 3xx Redirection
@@ -284,7 +284,7 @@ public abstract class Throw {
     }
 
     public static void multipleChoices(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.MULTIPLE_CHOICES);
+        throw new ExpectedException(code, message, HttpStatus.MULTIPLE_CHOICES);
     }
 
     /**
@@ -298,7 +298,7 @@ public abstract class Throw {
     }
 
     public static void movedPermanently(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.MOVED_PERMANENTLY);
+        throw new ExpectedException(code, message, HttpStatus.MOVED_PERMANENTLY);
     }
 
     /**
@@ -312,7 +312,7 @@ public abstract class Throw {
     }
 
     public static void found(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.FOUND);
+        throw new ExpectedException(code, message, HttpStatus.FOUND);
     }
 
     /**
@@ -329,7 +329,7 @@ public abstract class Throw {
 
     @Deprecated
     public static void movedTemporarily(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.MOVED_TEMPORARILY);
+        throw new ExpectedException(code, message, HttpStatus.MOVED_TEMPORARILY);
     }
 
     /**
@@ -343,7 +343,7 @@ public abstract class Throw {
     }
 
     public static void seeOther(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.SEE_OTHER);
+        throw new ExpectedException(code, message, HttpStatus.SEE_OTHER);
     }
 
     /**
@@ -357,7 +357,7 @@ public abstract class Throw {
     }
 
     public static void notModified(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.NOT_MODIFIED);
+        throw new ExpectedException(code, message, HttpStatus.NOT_MODIFIED);
     }
 
     /**
@@ -374,7 +374,7 @@ public abstract class Throw {
 
     @Deprecated
     public static void useProxy(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.USE_PROXY);
+        throw new ExpectedException(code, message, HttpStatus.USE_PROXY);
     }
 
     /**
@@ -388,7 +388,7 @@ public abstract class Throw {
     }
 
     public static void temporaryRedirect(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.TEMPORARY_REDIRECT);
+        throw new ExpectedException(code, message, HttpStatus.TEMPORARY_REDIRECT);
     }
 
     /**
@@ -402,7 +402,7 @@ public abstract class Throw {
     }
 
     public static void permanentRedirect(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.PERMANENT_REDIRECT);
+        throw new ExpectedException(code, message, HttpStatus.PERMANENT_REDIRECT);
     }
 
     // --- 4xx Client Error ---
@@ -418,7 +418,7 @@ public abstract class Throw {
     }
 
     public static void badRequest(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.BAD_REQUEST);
+        throw new ExpectedException(code, message, HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -432,7 +432,7 @@ public abstract class Throw {
     }
 
     public static void unauthorized(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.UNAUTHORIZED);
+        throw new ExpectedException(code, message, HttpStatus.UNAUTHORIZED);
     }
 
     /**
@@ -446,7 +446,7 @@ public abstract class Throw {
     }
 
     public static void paymentRequired(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.PAYMENT_REQUIRED);
+        throw new ExpectedException(code, message, HttpStatus.PAYMENT_REQUIRED);
     }
 
     /**
@@ -460,7 +460,7 @@ public abstract class Throw {
     }
 
     public static void forbidden(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.FORBIDDEN);
+        throw new ExpectedException(code, message, HttpStatus.FORBIDDEN);
     }
 
     /**
@@ -474,7 +474,7 @@ public abstract class Throw {
     }
 
     public static void notFound(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.NOT_FOUND);
+        throw new ExpectedException(code, message, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -488,7 +488,7 @@ public abstract class Throw {
     }
 
     public static void methodNotAllowed(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.METHOD_NOT_ALLOWED);
+        throw new ExpectedException(code, message, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     /**
@@ -502,7 +502,7 @@ public abstract class Throw {
     }
 
     public static void notAcceptable(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.NOT_ACCEPTABLE);
+        throw new ExpectedException(code, message, HttpStatus.NOT_ACCEPTABLE);
     }
 
     /**
@@ -516,7 +516,7 @@ public abstract class Throw {
     }
 
     public static void proxyAuthenticationRequired(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.PROXY_AUTHENTICATION_REQUIRED);
+        throw new ExpectedException(code, message, HttpStatus.PROXY_AUTHENTICATION_REQUIRED);
     }
 
     /**
@@ -530,7 +530,7 @@ public abstract class Throw {
     }
 
     public static void requestTimeout(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.REQUEST_TIMEOUT);
+        throw new ExpectedException(code, message, HttpStatus.REQUEST_TIMEOUT);
     }
 
     /**
@@ -544,7 +544,7 @@ public abstract class Throw {
     }
 
     public static void conflict(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.CONFLICT);
+        throw new ExpectedException(code, message, HttpStatus.CONFLICT);
     }
 
     /**
@@ -559,7 +559,7 @@ public abstract class Throw {
     }
 
     public static void gone(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.GONE);
+        throw new ExpectedException(code, message, HttpStatus.GONE);
     }
 
     /**
@@ -574,7 +574,7 @@ public abstract class Throw {
     }
 
     public static void lengthRequired(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.LENGTH_REQUIRED);
+        throw new ExpectedException(code, message, HttpStatus.LENGTH_REQUIRED);
     }
 
     /**
@@ -589,7 +589,7 @@ public abstract class Throw {
     }
 
     public static void preconditionFailed(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.PRECONDITION_FAILED);
+        throw new ExpectedException(code, message, HttpStatus.PRECONDITION_FAILED);
     }
 
     /**
@@ -605,7 +605,7 @@ public abstract class Throw {
     }
 
     public static void payloadTooLarge(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.PAYLOAD_TOO_LARGE);
+        throw new ExpectedException(code, message, HttpStatus.PAYLOAD_TOO_LARGE);
     }
 
     /**
@@ -623,7 +623,7 @@ public abstract class Throw {
 
     @Deprecated
     public static void requestEntityTooLarge(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.REQUEST_ENTITY_TOO_LARGE);
+        throw new ExpectedException(code, message, HttpStatus.REQUEST_ENTITY_TOO_LARGE);
     }
 
     /**
@@ -639,7 +639,7 @@ public abstract class Throw {
     }
 
     public static void URITooLong(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.URI_TOO_LONG);
+        throw new ExpectedException(code, message, HttpStatus.URI_TOO_LONG);
     }
 
     /**
@@ -656,7 +656,7 @@ public abstract class Throw {
 
     @Deprecated
     public static void RequestURITooLong(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.REQUEST_URI_TOO_LONG);
+        throw new ExpectedException(code, message, HttpStatus.REQUEST_URI_TOO_LONG);
     }
 
     /**
@@ -671,7 +671,7 @@ public abstract class Throw {
     }
 
     public static void unsupportedMediaType(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        throw new ExpectedException(code, message, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
 
     /**
@@ -685,7 +685,7 @@ public abstract class Throw {
     }
 
     public static void requestedRangeNotSatisfiable(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
+        throw new ExpectedException(code, message, HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
     }
 
     /**
@@ -700,7 +700,7 @@ public abstract class Throw {
     }
 
     public static void expectationFailed(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.EXPECTATION_FAILED);
+        throw new ExpectedException(code, message, HttpStatus.EXPECTATION_FAILED);
     }
 
     /**
@@ -714,7 +714,7 @@ public abstract class Throw {
     }
 
     public static void iamATeapot(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.I_AM_A_TEAPOT);
+        throw new ExpectedException(code, message, HttpStatus.I_AM_A_TEAPOT);
     }
 
     /**
@@ -730,7 +730,7 @@ public abstract class Throw {
 
     @Deprecated
     public static void insufficientSpaceOnResource(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.INSUFFICIENT_SPACE_ON_RESOURCE);
+        throw new ExpectedException(code, message, HttpStatus.INSUFFICIENT_SPACE_ON_RESOURCE);
     }
 
     /**
@@ -746,7 +746,7 @@ public abstract class Throw {
 
     @Deprecated
     public static void methodFailure(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.METHOD_FAILURE);
+        throw new ExpectedException(code, message, HttpStatus.METHOD_FAILURE);
     }
 
     /**
@@ -761,7 +761,7 @@ public abstract class Throw {
 
     @Deprecated
     public static void destinationLocked(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.DESTINATION_LOCKED);
+        throw new ExpectedException(code, message, HttpStatus.DESTINATION_LOCKED);
     }
 
     /**
@@ -775,7 +775,7 @@ public abstract class Throw {
     }
 
     public static void unprocessableEntity(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.UNPROCESSABLE_ENTITY);
+        throw new ExpectedException(code, message, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -789,7 +789,7 @@ public abstract class Throw {
     }
 
     public static void locked(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.LOCKED);
+        throw new ExpectedException(code, message, HttpStatus.LOCKED);
     }
 
     /**
@@ -803,7 +803,7 @@ public abstract class Throw {
     }
 
     public static void failedDependency(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.FAILED_DEPENDENCY);
+        throw new ExpectedException(code, message, HttpStatus.FAILED_DEPENDENCY);
     }
 
     /**
@@ -818,7 +818,7 @@ public abstract class Throw {
     }
 
     public static void tooEarly(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.TOO_EARLY);
+        throw new ExpectedException(code, message, HttpStatus.TOO_EARLY);
     }
 
     /**
@@ -832,7 +832,7 @@ public abstract class Throw {
     }
 
     public static void upgradeRequired(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.UPGRADE_REQUIRED);
+        throw new ExpectedException(code, message, HttpStatus.UPGRADE_REQUIRED);
     }
 
     /**
@@ -846,7 +846,7 @@ public abstract class Throw {
     }
 
     public static void preconditionRequired(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.PRECONDITION_REQUIRED);
+        throw new ExpectedException(code, message, HttpStatus.PRECONDITION_REQUIRED);
     }
 
     /**
@@ -860,7 +860,7 @@ public abstract class Throw {
     }
 
     public static void tooManyRequests(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.TOO_MANY_REQUESTS);
+        throw new ExpectedException(code, message, HttpStatus.TOO_MANY_REQUESTS);
     }
 
     /**
@@ -874,7 +874,7 @@ public abstract class Throw {
     }
 
     public static void requestHeaderFieldsTooLarge(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.REQUEST_HEADER_FIELDS_TOO_LARGE);
+        throw new ExpectedException(code, message, HttpStatus.REQUEST_HEADER_FIELDS_TOO_LARGE);
     }
 
     /**
@@ -890,7 +890,7 @@ public abstract class Throw {
     }
 
     public static void unavailableForLegalReasons(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
+        throw new ExpectedException(code, message, HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
     }
 
     // --- 5xx Server Error ---
@@ -906,7 +906,7 @@ public abstract class Throw {
     }
 
     public static void internalServerError(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new ExpectedException(code, message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -920,7 +920,7 @@ public abstract class Throw {
     }
 
     public static void notImplemented(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.NOT_IMPLEMENTED);
+        throw new ExpectedException(code, message, HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -934,7 +934,7 @@ public abstract class Throw {
     }
 
     public static void badGateway(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.BAD_GATEWAY);
+        throw new ExpectedException(code, message, HttpStatus.BAD_GATEWAY);
     }
 
     /**
@@ -948,7 +948,7 @@ public abstract class Throw {
     }
 
     public static void serviceUnavailable(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.SERVICE_UNAVAILABLE);
+        throw new ExpectedException(code, message, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     /**
@@ -962,7 +962,7 @@ public abstract class Throw {
     }
 
     public static void gatewayTimeout(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.GATEWAY_TIMEOUT);
+        throw new ExpectedException(code, message, HttpStatus.GATEWAY_TIMEOUT);
     }
 
     /**
@@ -976,7 +976,7 @@ public abstract class Throw {
     }
 
     public static void HttpVersionNotSupported(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.HTTP_VERSION_NOT_SUPPORTED);
+        throw new ExpectedException(code, message, HttpStatus.HTTP_VERSION_NOT_SUPPORTED);
     }
 
     /**
@@ -990,7 +990,7 @@ public abstract class Throw {
     }
 
     public static void variantAlsoNegotiates(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.VARIANT_ALSO_NEGOTIATES);
+        throw new ExpectedException(code, message, HttpStatus.VARIANT_ALSO_NEGOTIATES);
     }
 
     /**
@@ -1004,7 +1004,7 @@ public abstract class Throw {
     }
 
     public static void insufficientStorage(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.INSUFFICIENT_STORAGE);
+        throw new ExpectedException(code, message, HttpStatus.INSUFFICIENT_STORAGE);
     }
 
     /**
@@ -1018,7 +1018,7 @@ public abstract class Throw {
     }
 
     public static void loopDetected(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.LOOP_DETECTED);
+        throw new ExpectedException(code, message, HttpStatus.LOOP_DETECTED);
     }
 
     /**
@@ -1030,7 +1030,7 @@ public abstract class Throw {
     }
 
     public static void bandwidthLimitExceeded(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
+        throw new ExpectedException(code, message, HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
     }
 
     /**
@@ -1044,7 +1044,7 @@ public abstract class Throw {
     }
 
     public static void notExtended(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.NOT_EXTENDED);
+        throw new ExpectedException(code, message, HttpStatus.NOT_EXTENDED);
     }
 
     /**
@@ -1058,7 +1058,7 @@ public abstract class Throw {
     }
 
     public static void networkAuthenticationRequired(int code, String message) {
-        throw new UtilityException(code, message, HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
+        throw new ExpectedException(code, message, HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
     }
 
 }
