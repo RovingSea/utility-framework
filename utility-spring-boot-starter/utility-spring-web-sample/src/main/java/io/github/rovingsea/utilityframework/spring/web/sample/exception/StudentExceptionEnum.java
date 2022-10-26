@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.sample.exception;
 
-import io.github.rovingsea.utilityframework.spring.web.exception.BaseEnum;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExceptionEnum;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.Student;
 import io.github.rovingsea.utilityframework.spring.web.sample.service.StudentService;
 import io.github.rovingsea.utilityframework.spring.web.utils.SpringBeanUtils;
@@ -9,7 +9,7 @@ import io.github.rovingsea.utilityframework.spring.web.utils.SpringBeanUtils;
  * @author Haixin Wu
  * @since 1.0.0
  */
-public enum StudentError implements BaseEnum {
+public enum StudentExceptionEnum implements ExceptionEnum {
 
     /**
      * Query {@link Student} by id
@@ -28,7 +28,7 @@ public enum StudentError implements BaseEnum {
 
     private final String message;
 
-    StudentError(int code, String message) {
+    StudentExceptionEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }

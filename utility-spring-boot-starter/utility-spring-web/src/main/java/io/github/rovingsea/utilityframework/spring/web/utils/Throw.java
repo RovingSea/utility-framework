@@ -1,6 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.utils;
 
-import io.github.rovingsea.utilityframework.spring.web.exception.BaseEnum;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExceptionEnum;
 import io.github.rovingsea.utilityframework.spring.web.exception.ExceptionDispatcher;
 import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ import org.springframework.http.HttpStatus;
  *         badRequest(baseEnum.getCode(), baseEnum.getMessage());
  *     }
  * }</pre>
- * The above code is obtained by passing the implementation class of {@link BaseEnum}
- * to obtain its {@link BaseEnum#getCode()} and {@link BaseEnum#getMessage()},
+ * The above code is obtained by passing the implementation class of {@link ExceptionEnum}
+ * to obtain its {@link ExceptionEnum#getCode()} and {@link ExceptionEnum#getMessage()},
  * and then passed to the following code:
  * <pre>{@code
  *     public static void badRequest(int code, String message) {
@@ -27,7 +27,7 @@ import org.springframework.http.HttpStatus;
  *     }
  * }</pre>
  * The above code will throw an exception containing {@link HttpStatus}
- * through {@link BaseEnum#getCode()} and {@link BaseEnum#getMessage()}.
+ * through {@link ExceptionEnum#getCode()} and {@link ExceptionEnum#getMessage()}.
  * </p>
  * <p>
  * Finally, the thrown exception will be handled in {@link ExceptionDispatcher}
@@ -44,7 +44,7 @@ public abstract class Throw {
      *
      * @param en implementation enumeration of BaseEnum.
      */
-    public static void exception(Enum<? extends BaseEnum> en) {
+    public static void exception(Enum<? extends ExceptionEnum> en) {
         exception(en, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -54,9 +54,9 @@ public abstract class Throw {
      * @param en         implementation enumeration of BaseEnum.
      * @param httpStatus the response code.
      */
-    public static void exception(Enum<? extends BaseEnum> en, HttpStatus httpStatus) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        exception(baseEnum.getCode(), baseEnum.getMessage(), httpStatus);
+    public static void exception(Enum<? extends ExceptionEnum> en, HttpStatus httpStatus) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        exception(exceptionEnum.getCode(), exceptionEnum.getMessage(), httpStatus);
     }
 
     /**
@@ -77,9 +77,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.2.1">HTTP/1.1: Semantics and Content, section 6.2.1</a>
      */
-    public static void Continue(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        Continue(baseEnum.getCode(), baseEnum.getMessage());
+    public static void Continue(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        Continue(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void Continue(int code, String message) {
@@ -91,9 +91,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.2.2">HTTP/1.1: Semantics and Content, section 6.2.2</a>
      */
-    public static void switchingProtocols(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        switchingProtocols(baseEnum.getCode(), baseEnum.getMessage());
+    public static void switchingProtocols(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        switchingProtocols(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void switchingProtocols(int code, String message) {
@@ -105,9 +105,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc2518#section-10.1">WebDAV</a>
      */
-    public static void processing(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        processing(baseEnum.getCode(), baseEnum.getMessage());
+    public static void processing(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        processing(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void processing(int code, String message) {
@@ -120,9 +120,9 @@ public abstract class Throw {
      * @see <a href="https://code.google.com/p/gears/wiki/ResumableHttpRequestsProposal">A proposal for supporting
      * resumable POST/PUT HTTP requests in HTTP/1.0</a>
      */
-    public static void checkpoint(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        checkpoint(baseEnum.getCode(), baseEnum.getMessage());
+    public static void checkpoint(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        checkpoint(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void checkpoint(int code, String message) {
@@ -136,9 +136,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">HTTP/1.1: Semantics and Content, section 6.3.1</a>
      */
-    public static void ok(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        ok(baseEnum.getCode(), baseEnum.getMessage());
+    public static void ok(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        ok(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void ok(int code, String message) {
@@ -150,9 +150,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.2">HTTP/1.1: Semantics and Content, section 6.3.2</a>
      */
-    public static void created(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        created(baseEnum.getCode(), baseEnum.getMessage());
+    public static void created(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        created(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void created(int code, String message) {
@@ -164,9 +164,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.3">HTTP/1.1: Semantics and Content, section 6.3.3</a>
      */
-    public static void accepted(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        accepted(baseEnum.getCode(), baseEnum.getMessage());
+    public static void accepted(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        accepted(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void accepted(int code, String message) {
@@ -178,9 +178,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.4">HTTP/1.1: Semantics and Content, section 6.3.4</a>
      */
-    public static void nonAuthoritativeInformation(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        nonAuthoritativeInformation(baseEnum.getCode(), baseEnum.getMessage());
+    public static void nonAuthoritativeInformation(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        nonAuthoritativeInformation(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void nonAuthoritativeInformation(int code, String message) {
@@ -192,9 +192,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.5">HTTP/1.1: Semantics and Content, section 6.3.5</a>
      */
-    public static void noContent(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        noContent(baseEnum.getCode(), baseEnum.getMessage());
+    public static void noContent(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        noContent(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void noContent(int code, String message) {
@@ -206,9 +206,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.6">HTTP/1.1: Semantics and Content, section 6.3.6</a>
      */
-    public static void resetContent(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        resetContent(baseEnum.getCode(), baseEnum.getMessage());
+    public static void resetContent(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        resetContent(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void resetContent(int code, String message) {
@@ -220,9 +220,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7233#section-4.1">HTTP/1.1: Range Requests, section 4.1</a>
      */
-    public static void partialContent(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        partialContent(baseEnum.getCode(), baseEnum.getMessage());
+    public static void partialContent(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        partialContent(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void partialContent(int code, String message) {
@@ -234,9 +234,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc4918#section-13">WebDAV</a>
      */
-    public static void multiStatus(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        multiStatus(baseEnum.getCode(), baseEnum.getMessage());
+    public static void multiStatus(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        multiStatus(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void multiStatus(int code, String message) {
@@ -248,9 +248,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc5842#section-7.1">WebDAV Binding Extensions</a>
      */
-    public static void alreadyReported(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        alreadyReported(baseEnum.getCode(), baseEnum.getMessage());
+    public static void alreadyReported(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        alreadyReported(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void alreadyReported(int code, String message) {
@@ -262,9 +262,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc3229#section-10.4.1">Delta encoding in HTTP</a>
      */
-    public static void imUsed(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        imUsed(baseEnum.getCode(), baseEnum.getMessage());
+    public static void imUsed(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        imUsed(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void imUsed(int code, String message) {
@@ -278,9 +278,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.1">HTTP/1.1: Semantics and Content, section 6.4.1</a>
      */
-    public static void multipleChoices(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        multipleChoices(baseEnum.getCode(), baseEnum.getMessage());
+    public static void multipleChoices(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        multipleChoices(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void multipleChoices(int code, String message) {
@@ -292,9 +292,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.2">HTTP/1.1: Semantics and Content, section 6.4.2</a>
      */
-    public static void movedPermanently(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        movedPermanently(baseEnum.getCode(), baseEnum.getMessage());
+    public static void movedPermanently(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        movedPermanently(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void movedPermanently(int code, String message) {
@@ -306,9 +306,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.3">HTTP/1.1: Semantics and Content, section 6.4.3</a>
      */
-    public static void found(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        found(baseEnum.getCode(), baseEnum.getMessage());
+    public static void found(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        found(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void found(int code, String message) {
@@ -322,9 +322,9 @@ public abstract class Throw {
      * @deprecated in favor of {@link #found(int, String)} which will be returned from {@code HttpStatus.valueOf(302)}
      */
     @Deprecated
-    public static void movedTemporarily(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        movedTemporarily(baseEnum.getCode(), baseEnum.getMessage());
+    public static void movedTemporarily(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        movedTemporarily(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     @Deprecated
@@ -337,9 +337,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.4">HTTP/1.1: Semantics and Content, section 6.4.4</a>
      */
-    public static void seeOther(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        seeOther(baseEnum.getCode(), baseEnum.getMessage());
+    public static void seeOther(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        seeOther(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void seeOther(int code, String message) {
@@ -351,9 +351,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7232#section-4.1">HTTP/1.1: Conditional Requests, section 4.1</a>
      */
-    public static void notModified(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        notModified(baseEnum.getCode(), baseEnum.getMessage());
+    public static void notModified(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        notModified(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void notModified(int code, String message) {
@@ -367,9 +367,9 @@ public abstract class Throw {
      * @deprecated due to security concerns regarding in-band configuration of a proxy
      */
     @Deprecated
-    public static void useProxy(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        useProxy(baseEnum.getCode(), baseEnum.getMessage());
+    public static void useProxy(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        useProxy(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     @Deprecated
@@ -382,9 +382,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.7">HTTP/1.1: Semantics and Content, section 6.4.7</a>
      */
-    public static void temporaryRedirect(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        temporaryRedirect(baseEnum.getCode(), baseEnum.getMessage());
+    public static void temporaryRedirect(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        temporaryRedirect(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void temporaryRedirect(int code, String message) {
@@ -396,9 +396,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7238">RFC 7238</a>
      */
-    public static void permanentRedirect(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        permanentRedirect(baseEnum.getCode(), baseEnum.getMessage());
+    public static void permanentRedirect(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        permanentRedirect(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void permanentRedirect(int code, String message) {
@@ -412,9 +412,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">HTTP/1.1: Semantics and Content, section 6.5.1</a>
      */
-    public static void badRequest(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        badRequest(baseEnum.getCode(), baseEnum.getMessage());
+    public static void badRequest(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        badRequest(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void badRequest(int code, String message) {
@@ -426,9 +426,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7235#section-3.1">HTTP/1.1: Authentication, section 3.1</a>
      */
-    public static void unauthorized(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        unauthorized(baseEnum.getCode(), baseEnum.getMessage());
+    public static void unauthorized(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        unauthorized(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void unauthorized(int code, String message) {
@@ -440,9 +440,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.2">HTTP/1.1: Semantics and Content, section 6.5.2</a>
      */
-    public static void paymentRequired(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        paymentRequired(baseEnum.getCode(), baseEnum.getMessage());
+    public static void paymentRequired(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        paymentRequired(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void paymentRequired(int code, String message) {
@@ -454,9 +454,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">HTTP/1.1: Semantics and Content, section 6.5.3</a>
      */
-    public static void forbidden(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        forbidden(baseEnum.getCode(), baseEnum.getMessage());
+    public static void forbidden(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        forbidden(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void forbidden(int code, String message) {
@@ -468,9 +468,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">HTTP/1.1: Semantics and Content, section 6.5.4</a>
      */
-    public static void notFound(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        notFound(baseEnum.getCode(), baseEnum.getMessage());
+    public static void notFound(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        notFound(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void notFound(int code, String message) {
@@ -482,9 +482,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.5">HTTP/1.1: Semantics and Content, section 6.5.5</a>
      */
-    public static void methodNotAllowed(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        methodNotAllowed(baseEnum.getCode(), baseEnum.getMessage());
+    public static void methodNotAllowed(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        methodNotAllowed(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void methodNotAllowed(int code, String message) {
@@ -496,9 +496,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.6">HTTP/1.1: Semantics and Content, section 6.5.6</a>
      */
-    public static void notAcceptable(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        notAcceptable(baseEnum.getCode(), baseEnum.getMessage());
+    public static void notAcceptable(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        notAcceptable(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void notAcceptable(int code, String message) {
@@ -510,9 +510,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7235#section-3.2">HTTP/1.1: Authentication, section 3.2</a>
      */
-    public static void proxyAuthenticationRequired(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        proxyAuthenticationRequired(baseEnum.getCode(), baseEnum.getMessage());
+    public static void proxyAuthenticationRequired(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        proxyAuthenticationRequired(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void proxyAuthenticationRequired(int code, String message) {
@@ -524,9 +524,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.7">HTTP/1.1: Semantics and Content, section 6.5.7</a>
      */
-    public static void requestTimeout(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        requestTimeout(baseEnum.getCode(), baseEnum.getMessage());
+    public static void requestTimeout(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        requestTimeout(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void requestTimeout(int code, String message) {
@@ -538,9 +538,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.8">HTTP/1.1: Semantics and Content, section 6.5.8</a>
      */
-    public static void conflict(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        conflict(baseEnum.getCode(), baseEnum.getMessage());
+    public static void conflict(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        conflict(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void conflict(int code, String message) {
@@ -553,9 +553,9 @@ public abstract class Throw {
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.9">
      * HTTP/1.1: Semantics and Content, section 6.5.9</a>
      */
-    public static void gone(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        gone(baseEnum.getCode(), baseEnum.getMessage());
+    public static void gone(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        gone(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void gone(int code, String message) {
@@ -568,9 +568,9 @@ public abstract class Throw {
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.10">
      * HTTP/1.1: Semantics and Content, section 6.5.10</a>
      */
-    public static void lengthRequired(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        lengthRequired(baseEnum.getCode(), baseEnum.getMessage());
+    public static void lengthRequired(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        lengthRequired(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void lengthRequired(int code, String message) {
@@ -583,9 +583,9 @@ public abstract class Throw {
      * @see <a href="https://tools.ietf.org/html/rfc7232#section-4.2">
      * HTTP/1.1: Conditional Requests, section 4.2</a>
      */
-    public static void preconditionFailed(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        preconditionFailed(baseEnum.getCode(), baseEnum.getMessage());
+    public static void preconditionFailed(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        preconditionFailed(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void preconditionFailed(int code, String message) {
@@ -599,9 +599,9 @@ public abstract class Throw {
      * HTTP/1.1: Semantics and Content, section 6.5.11</a>
      * @since 4.1
      */
-    public static void payloadTooLarge(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        payloadTooLarge(baseEnum.getCode(), baseEnum.getMessage());
+    public static void payloadTooLarge(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        payloadTooLarge(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void payloadTooLarge(int code, String message) {
@@ -616,9 +616,9 @@ public abstract class Throw {
      * returned from {@code HttpStatus.valueOf(413)}
      */
     @Deprecated
-    public static void requestEntityTooLarge(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        requestEntityTooLarge(baseEnum.getCode(), baseEnum.getMessage());
+    public static void requestEntityTooLarge(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        requestEntityTooLarge(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     @Deprecated
@@ -633,9 +633,9 @@ public abstract class Throw {
      * HTTP/1.1: Semantics and Content, section 6.5.12</a>
      * @since 4.1
      */
-    public static void URITooLong(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        URITooLong(baseEnum.getCode(), baseEnum.getMessage());
+    public static void URITooLong(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        URITooLong(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void URITooLong(int code, String message) {
@@ -649,9 +649,9 @@ public abstract class Throw {
      * @deprecated in favor of {@link #URITooLong(int, String)} which will be returned from {@code HttpStatus.valueOf(414)}
      */
     @Deprecated
-    public static void RequestURITooLong(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        RequestURITooLong(baseEnum.getCode(), baseEnum.getMessage());
+    public static void RequestURITooLong(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        RequestURITooLong(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     @Deprecated
@@ -665,9 +665,9 @@ public abstract class Throw {
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.13">
      * HTTP/1.1: Semantics and Content, section 6.5.13</a>
      */
-    public static void unsupportedMediaType(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        unsupportedMediaType(baseEnum.getCode(), baseEnum.getMessage());
+    public static void unsupportedMediaType(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        unsupportedMediaType(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void unsupportedMediaType(int code, String message) {
@@ -679,9 +679,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7233#section-4.4">HTTP/1.1: Range Requests, section 4.4</a>
      */
-    public static void requestedRangeNotSatisfiable(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        requestedRangeNotSatisfiable(baseEnum.getCode(), baseEnum.getMessage());
+    public static void requestedRangeNotSatisfiable(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        requestedRangeNotSatisfiable(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void requestedRangeNotSatisfiable(int code, String message) {
@@ -694,9 +694,9 @@ public abstract class Throw {
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.14">
      * HTTP/1.1: Semantics and Content, section 6.5.14</a>
      */
-    public static void expectationFailed(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        expectationFailed(baseEnum.getCode(), baseEnum.getMessage());
+    public static void expectationFailed(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        expectationFailed(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void expectationFailed(int code, String message) {
@@ -708,9 +708,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc2324#section-2.3.2">HTCPCP/1.0</a>
      */
-    public static void iamATeapot(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        iamATeapot(baseEnum.getCode(), baseEnum.getMessage());
+    public static void iamATeapot(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        iamATeapot(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void iamATeapot(int code, String message) {
@@ -723,9 +723,9 @@ public abstract class Throw {
      * WebDAV Draft Changes</a>
      */
     @Deprecated
-    public static void insufficientSpaceOnResource(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        insufficientSpaceOnResource(baseEnum.getCode(), baseEnum.getMessage());
+    public static void insufficientSpaceOnResource(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        insufficientSpaceOnResource(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     @Deprecated
@@ -739,9 +739,9 @@ public abstract class Throw {
      * WebDAV Draft Changes</a>
      */
     @Deprecated
-    public static void methodFailure(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        methodFailure(baseEnum.getCode(), baseEnum.getMessage());
+    public static void methodFailure(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        methodFailure(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     @Deprecated
@@ -754,9 +754,9 @@ public abstract class Throw {
      * WebDAV Draft Changes</a>
      */
     @Deprecated
-    public static void destinationLocked(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        destinationLocked(baseEnum.getCode(), baseEnum.getMessage());
+    public static void destinationLocked(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        destinationLocked(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     @Deprecated
@@ -769,9 +769,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc4918#section-11.2">WebDAV</a>
      */
-    public static void unprocessableEntity(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        unprocessableEntity(baseEnum.getCode(), baseEnum.getMessage());
+    public static void unprocessableEntity(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        unprocessableEntity(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void unprocessableEntity(int code, String message) {
@@ -783,9 +783,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc4918#section-11.3">WebDAV</a>
      */
-    public static void locked(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        locked(baseEnum.getCode(), baseEnum.getMessage());
+    public static void locked(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        locked(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void locked(int code, String message) {
@@ -797,9 +797,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc4918#section-11.4">WebDAV</a>
      */
-    public static void failedDependency(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        failedDependency(baseEnum.getCode(), baseEnum.getMessage());
+    public static void failedDependency(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        failedDependency(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void failedDependency(int code, String message) {
@@ -812,9 +812,9 @@ public abstract class Throw {
      * @see <a href="https://tools.ietf.org/html/rfc8470">RFC 8470</a>
      * @since 5.2
      */
-    public static void tooEarly(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        tooEarly(baseEnum.getCode(), baseEnum.getMessage());
+    public static void tooEarly(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        tooEarly(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void tooEarly(int code, String message) {
@@ -826,9 +826,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc2817#section-6">Upgrading to TLS Within HTTP/1.1</a>
      */
-    public static void upgradeRequired(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        upgradeRequired(baseEnum.getCode(), baseEnum.getMessage());
+    public static void upgradeRequired(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        upgradeRequired(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void upgradeRequired(int code, String message) {
@@ -840,9 +840,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc6585#section-3">Additional HTTP Status Codes</a>
      */
-    public static void preconditionRequired(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        preconditionRequired(baseEnum.getCode(), baseEnum.getMessage());
+    public static void preconditionRequired(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        preconditionRequired(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void preconditionRequired(int code, String message) {
@@ -854,9 +854,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc6585#section-4">Additional HTTP Status Codes</a>
      */
-    public static void tooManyRequests(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        tooManyRequests(baseEnum.getCode(), baseEnum.getMessage());
+    public static void tooManyRequests(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        tooManyRequests(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void tooManyRequests(int code, String message) {
@@ -868,9 +868,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc6585#section-5">Additional HTTP Status Codes</a>
      */
-    public static void requestHeaderFieldsTooLarge(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        requestHeaderFieldsTooLarge(baseEnum.getCode(), baseEnum.getMessage());
+    public static void requestHeaderFieldsTooLarge(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        requestHeaderFieldsTooLarge(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void requestHeaderFieldsTooLarge(int code, String message) {
@@ -884,9 +884,9 @@ public abstract class Throw {
      * An HTTP Status Code to Report Legal Obstacles</a>
      * @since 4.3
      */
-    public static void unavailableForLegalReasons(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        unavailableForLegalReasons(baseEnum.getCode(), baseEnum.getMessage());
+    public static void unavailableForLegalReasons(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        unavailableForLegalReasons(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void unavailableForLegalReasons(int code, String message) {
@@ -900,9 +900,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.1">HTTP/1.1: Semantics and Content, section 6.6.1</a>
      */
-    public static void internalServerError(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        internalServerError(baseEnum.getCode(), baseEnum.getMessage());
+    public static void internalServerError(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        internalServerError(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void internalServerError(int code, String message) {
@@ -914,9 +914,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.2">HTTP/1.1: Semantics and Content, section 6.6.2</a>
      */
-    public static void notImplemented(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        notImplemented(baseEnum.getCode(), baseEnum.getMessage());
+    public static void notImplemented(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        notImplemented(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void notImplemented(int code, String message) {
@@ -928,9 +928,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.3">HTTP/1.1: Semantics and Content, section 6.6.3</a>
      */
-    public static void badGateway(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        badGateway(baseEnum.getCode(), baseEnum.getMessage());
+    public static void badGateway(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        badGateway(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void badGateway(int code, String message) {
@@ -942,9 +942,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.4">HTTP/1.1: Semantics and Content, section 6.6.4</a>
      */
-    public static void serviceUnavailable(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        serviceUnavailable(baseEnum.getCode(), baseEnum.getMessage());
+    public static void serviceUnavailable(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        serviceUnavailable(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void serviceUnavailable(int code, String message) {
@@ -956,9 +956,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.5">HTTP/1.1: Semantics and Content, section 6.6.5</a>
      */
-    public static void gatewayTimeout(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        gatewayTimeout(baseEnum.getCode(), baseEnum.getMessage());
+    public static void gatewayTimeout(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        gatewayTimeout(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void gatewayTimeout(int code, String message) {
@@ -970,9 +970,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.6">HTTP/1.1: Semantics and Content, section 6.6.6</a>
      */
-    public static void HttpVersionNotSupported(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        HttpVersionNotSupported(baseEnum.getCode(), baseEnum.getMessage());
+    public static void HttpVersionNotSupported(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        HttpVersionNotSupported(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void HttpVersionNotSupported(int code, String message) {
@@ -984,9 +984,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc2295#section-8.1">Transparent Content Negotiation</a>
      */
-    public static void variantAlsoNegotiates(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        variantAlsoNegotiates(baseEnum.getCode(), baseEnum.getMessage());
+    public static void variantAlsoNegotiates(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        variantAlsoNegotiates(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void variantAlsoNegotiates(int code, String message) {
@@ -998,9 +998,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc4918#section-11.5">WebDAV</a>
      */
-    public static void insufficientStorage(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        insufficientStorage(baseEnum.getCode(), baseEnum.getMessage());
+    public static void insufficientStorage(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        insufficientStorage(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void insufficientStorage(int code, String message) {
@@ -1012,9 +1012,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc5842#section-7.2">WebDAV Binding Extensions</a>
      */
-    public static void loopDetected(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        loopDetected(baseEnum.getCode(), baseEnum.getMessage());
+    public static void loopDetected(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        loopDetected(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void loopDetected(int code, String message) {
@@ -1024,9 +1024,9 @@ public abstract class Throw {
     /**
      * {@code 509 Bandwidth Limit Exceeded}
      */
-    public static void bandwidthLimitExceeded(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        bandwidthLimitExceeded(baseEnum.getCode(), baseEnum.getMessage());
+    public static void bandwidthLimitExceeded(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        bandwidthLimitExceeded(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void bandwidthLimitExceeded(int code, String message) {
@@ -1038,9 +1038,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc2774#section-7">HTTP Extension Framework</a>
      */
-    public static void notExtended(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        notExtended(baseEnum.getCode(), baseEnum.getMessage());
+    public static void notExtended(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        notExtended(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void notExtended(int code, String message) {
@@ -1052,9 +1052,9 @@ public abstract class Throw {
      *
      * @see <a href="https://tools.ietf.org/html/rfc6585#section-6">Additional HTTP Status Codes</a>
      */
-    public static void networkAuthenticationRequired(Enum<? extends BaseEnum> en) {
-        BaseEnum baseEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
-        networkAuthenticationRequired(baseEnum.getCode(), baseEnum.getMessage());
+    public static void networkAuthenticationRequired(Enum<? extends ExceptionEnum> en) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        networkAuthenticationRequired(exceptionEnum.getCode(), exceptionEnum.getMessage());
     }
 
     public static void networkAuthenticationRequired(int code, String message) {
