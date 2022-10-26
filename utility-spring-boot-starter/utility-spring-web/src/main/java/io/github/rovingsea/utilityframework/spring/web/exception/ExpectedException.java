@@ -1,9 +1,17 @@
 package io.github.rovingsea.utilityframework.spring.web.exception;
 
+import io.github.rovingsea.utilityframework.spring.web.exception.handler.ExpectedExceptionHandler;
 import org.springframework.http.HttpStatus;
 
 /**
+ * <p>
  * Its subclasses will be processed by the module of Utility exception.
+ * </p>
+ * <p>
+ * After using <i>utility framework</i>, the base class of the exception thrown manually
+ * by the programmer must be it.
+ * The {@link ExceptionDispatcher} will select {@link ExpectedExceptionHandler} to handle it.
+ * </p>
  *
  * @author Haixin Wu
  * @since 1.0.0
@@ -39,23 +47,42 @@ public class ExpectedException extends RuntimeException {
      * and its value will be used in the response header of the response.
      */
     protected final HttpStatus httpStatus;
-
-    protected final BaseEnum baseEnum;
-
+    /**
+     * The associated exception enumeration when this exception is thrown,
+     * its existence will provide <i>code</i>, <i>message</i> and processing method.
+     */
+    protected final ExceptionEnum exceptionEnum;
+    /**
+     * Its existence provides context information when an exception is thrown.
+     * <p>
+     * For example, I found meat I didn't like, but now I have two pets.
+     * The opinion is to decide which dog to eat.
+     * </p>
+     */
     protected final Object opinion;
 
-    public ExpectedException(BaseEnum baseEnum) {
-        this(baseEnum, HttpStatus.INTERNAL_SERVER_ERROR);
+    /**
+     * Trigger the {@link ExceptionEnum#postProcessAfterThrow(Object)}.
+     */
+    public void doProcess() {
+        if (getBaseEnum() == null || getOpinion() == null) {
+            return;
+        }
+        getBaseEnum().postProcessAfterThrow(getOpinion());
     }
 
-    public ExpectedException(BaseEnum baseEnum, HttpStatus httpStatus) {
-        this(baseEnum, httpStatus, null);
+    public ExpectedException(ExceptionEnum exceptionEnum) {
+        this(exceptionEnum, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ExpectedException(BaseEnum baseEnum, HttpStatus httpStatus, Object opinion) {
-        this.code = baseEnum.getCode();
-        this.message = baseEnum.getMessage();
-        this.baseEnum = baseEnum;
+    public ExpectedException(ExceptionEnum exceptionEnum, HttpStatus httpStatus) {
+        this(exceptionEnum, httpStatus, null);
+    }
+
+    public ExpectedException(ExceptionEnum exceptionEnum, HttpStatus httpStatus, Object opinion) {
+        this.code = exceptionEnum.getCode();
+        this.message = exceptionEnum.getMessage();
+        this.exceptionEnum = exceptionEnum;
         this.httpStatus = httpStatus;
         this.opinion = opinion;
     }
@@ -68,15 +95,8 @@ public class ExpectedException extends RuntimeException {
         this.code = code;
         this.message = message;
         this.httpStatus = httpStatus;
-        this.baseEnum = null;
+        this.exceptionEnum = null;
         this.opinion = null;
-    }
-
-    public void doProcess() {
-        if (getBaseEnum() == null || getOpinion() == null) {
-            return;
-        }
-        getBaseEnum().postProcessAfterThrow(getOpinion());
     }
 
     public int getCode() {
@@ -92,8 +112,8 @@ public class ExpectedException extends RuntimeException {
         return httpStatus;
     }
 
-    public BaseEnum getBaseEnum() {
-        return baseEnum;
+    public ExceptionEnum getBaseEnum() {
+        return exceptionEnum;
     }
 
     public Object getOpinion() {

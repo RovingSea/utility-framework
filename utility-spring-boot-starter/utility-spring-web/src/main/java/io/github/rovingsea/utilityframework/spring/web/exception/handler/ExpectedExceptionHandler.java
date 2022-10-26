@@ -1,5 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.exception.handler;
 
+import io.github.rovingsea.utilityframework.spring.web.exception.ExceptionEnum;
 import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import io.github.rovingsea.utilityframework.spring.web.response.ControllerExceptionResponse;
 import org.springframework.context.ApplicationContext;
@@ -9,8 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
+ * <p>
  * Specially handle {@link ExpectedException}, which will be handled in combination with
- * the {@link ControllerExceptionResponse} provided to the programmer.
+ * the {@link ControllerExceptionResponse} provided to the programmer, and trigger the
+ * {@link ExceptionEnum#postProcessAfterThrow(Object)}.
+ * </p>
  *
  * @author Haixin Wu
  * @since 1.0.0
