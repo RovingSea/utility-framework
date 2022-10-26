@@ -1,9 +1,12 @@
 package io.github.rovingsea.utilityframework.spring.web.sample.controller;
 
+import io.github.rovingsea.utilityframework.spring.web.sample.entity.Ingredient;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.People;
+import io.github.rovingsea.utilityframework.spring.web.sample.entity.dto.PreparationDto;
 import io.github.rovingsea.utilityframework.spring.web.sample.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +33,12 @@ public class PeopleController {
         return peopleService.getStudentsByAge(age);
     }
 
+    @RequestMapping("/cook")
+    public void cook(@RequestBody PreparationDto preparationDto) {
+        Ingredient ingredient = preparationDto.getIngredient();
+        int duration = preparationDto.getDuration();
+
+
+    }
 }
 

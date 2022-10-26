@@ -22,7 +22,15 @@ public enum PeopleExceptionEnum implements ExceptionEnum {
         }
     },
 
-    QUERY_BY_AGE(400002, "age cannot be less than 0 or more than 150");
+    QUERY_BY_AGE(400002, "age cannot be less than 0 or more than 150"),
+
+    COOK_INGREDIENT_BAD(400003, "the given ingredient is bad"),
+
+    COOK_INGREDIENT_OUT_OF_DATE(400004, "the given ingredient is out of date"),
+
+    COOK_TIME_IS_TOO_LONG(400005, "the given cook time is too long"),
+
+    COOK_TIME_IS_TOO_SHORT(400006, "the given cook time is too short");
 
     private final int code;
 

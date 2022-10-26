@@ -2,6 +2,8 @@ package io.github.rovingsea.utilityframework.spring.web.sample.service;
 
 
 
+import io.github.rovingsea.utilityframework.spring.web.sample.entity.Food;
+import io.github.rovingsea.utilityframework.spring.web.sample.entity.Ingredient;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.People;
 
 import java.util.List;
@@ -15,6 +17,8 @@ public interface PeopleService {
     People getStudentById(int id);
 
     List<People> getStudentsByAge(int age);
+
+    Food cook(Ingredient ingredient, int time);
 
 }
 
