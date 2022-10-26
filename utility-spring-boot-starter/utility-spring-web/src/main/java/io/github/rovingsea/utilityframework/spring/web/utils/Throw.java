@@ -1,7 +1,7 @@
 package io.github.rovingsea.utilityframework.spring.web.utils;
 
-import io.github.rovingsea.utilityframework.spring.web.exception.ExceptionEnum;
 import io.github.rovingsea.utilityframework.spring.web.exception.ExceptionDispatcher;
+import io.github.rovingsea.utilityframework.spring.web.exception.ExceptionEnum;
 import io.github.rovingsea.utilityframework.spring.web.exception.ExpectedException;
 import org.springframework.http.HttpStatus;
 
@@ -49,10 +49,21 @@ public abstract class Throw {
     }
 
     /**
+     * Throw an exception with an opinion, and the response code carries {@link HttpStatus#INTERNAL_SERVER_ERROR}
+     * by default.
+     *
+     * @param en      implementation enumeration of BaseEnum.
+     * @param opinion see {@link ExpectedException#getOpinion()}
+     */
+    public static void exception(Enum<? extends ExceptionEnum> en, Object opinion) {
+        exception(en, opinion, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * Throw an exception, and the response code determined by parameter <i>httpStatus</i>.
      *
      * @param en         implementation enumeration of BaseEnum.
-     * @param httpStatus the response code.
+     * @param httpStatus the response status.
      */
     public static void exception(Enum<? extends ExceptionEnum> en, HttpStatus httpStatus) {
         ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
@@ -60,11 +71,24 @@ public abstract class Throw {
     }
 
     /**
+     * Throw an exception with an opinion, and the response code determined by parameter <i>httpStatus</i>.
+     *
+     * @param en         implementation enumeration of BaseEnum.
+     * @param opinion    see {@link ExpectedException#getOpinion()}
+     * @param httpStatus the response status.
+     */
+    public static void exception(Enum<? extends ExceptionEnum> en, Object opinion, HttpStatus httpStatus) {
+        ExceptionEnum exceptionEnum = Enum.valueOf(en.getDeclaringClass(), en.name());
+        throw new ExpectedException(exceptionEnum, httpStatus, opinion);
+    }
+
+
+    /**
      * Throw an exception, and the response code determined by parameter httpStatus.
      *
      * @param code       exception code in the response body
      * @param message    exception message in the response body
-     * @param httpStatus the response code
+     * @param httpStatus the response status
      */
     public static void exception(int code, String message, HttpStatus httpStatus) {
         throw new ExpectedException(code, message, httpStatus);

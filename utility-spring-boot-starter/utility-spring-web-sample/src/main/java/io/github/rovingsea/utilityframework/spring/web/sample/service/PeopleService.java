@@ -18,7 +18,9 @@ public interface PeopleService {
 
     List<People> getStudentsByAge(int age);
 
-    Food cook(Ingredient ingredient, int time);
+    Food cook(Ingredient ingredient, int duration);
+
+    void eat(Food food);
 
 }
 

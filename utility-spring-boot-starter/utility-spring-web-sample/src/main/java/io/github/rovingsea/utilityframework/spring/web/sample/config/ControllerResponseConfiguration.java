@@ -32,7 +32,7 @@ public class ControllerResponseConfiguration {
             @Override
             public void setResponseBody(Map<String, Object> responseBody, ExpectedException e, HttpServletRequest request, HttpServletResponse response) {
                 Throwable rootCause = NestedExceptionUtils.getRootCause(e);
-                logger.error(NestedExceptionUtils.buildMessage(e.getMessage(), rootCause));
+                logger.info(NestedExceptionUtils.buildMessage(e.getMessage(), rootCause));
                 responseBody.put("code", e.getCode());
                 responseBody.put("message", e.getMessage());
             }

@@ -1,5 +1,6 @@
 package io.github.rovingsea.utilityframework.spring.web.sample.controller;
 
+import io.github.rovingsea.utilityframework.spring.web.sample.entity.Food;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.Ingredient;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.People;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.dto.PreparationDto;
@@ -34,11 +35,12 @@ public class PeopleController {
     }
 
     @RequestMapping("/cook")
-    public void cook(@RequestBody PreparationDto preparationDto) {
+    public String cook(@RequestBody PreparationDto preparationDto) {
         Ingredient ingredient = preparationDto.getIngredient();
         int duration = preparationDto.getDuration();
-
-
+        Food food = peopleService.cook(ingredient, duration);
+        peopleService.eat(food);
+        return "今天花了" + duration + "分钟煮了一道" + food.getDescribe() + "的" + food.getName() + "吃";
     }
 }
 

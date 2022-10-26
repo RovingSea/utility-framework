@@ -2,12 +2,11 @@ package io.github.rovingsea.utilityframework.spring.web.sample.validator;
 
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.Ingredient;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.dto.PreparationDto;
+import io.github.rovingsea.utilityframework.spring.web.sample.exception.PeopleExceptionEnum;
 import io.github.rovingsea.utilityframework.spring.web.utils.Throw;
 import io.github.rovingsea.utilityframework.spring.web.validator.ValidateMapping;
 import io.github.rovingsea.utilityframework.spring.web.validator.Validator;
-import io.github.rovingsea.utilityframework.spring.web.sample.exception.PeopleExceptionEnum;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +17,7 @@ import java.util.Date;
  * @author Haixin Wu
  * @since 1.0.0
  */
-@Validator("/student")
+@Validator("/people")
 public class PeopleValidator {
 
     @ValidateMapping("/queryById")

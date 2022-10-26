@@ -9,9 +9,11 @@ import io.github.rovingsea.utilityframework.spring.web.sample.exception.PeopleEx
 import io.github.rovingsea.utilityframework.spring.web.sample.service.PeopleService;
 import io.github.rovingsea.utilityframework.spring.web.utils.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Haixin Wu
@@ -34,16 +36,26 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public Food cook(Ingredient ingredient, int time) {
+    public Food cook(Ingredient ingredient, int duration) {
         String[] split = ingredient.getCookedTime().split("~");
-        if (time < Integer.parseInt(split[0])) {
-            Throw.preconditionFailed(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT);
+        if (duration < Integer.parseInt(split[0])) {
+            Throw.exception(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT, duration, HttpStatus.PRECONDITION_FAILED);
+//            Throw.preconditionFailed(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT, lower);
         }
-        if (time > Integer.parseInt(split[1])) {
-            Throw.preconditionFailed(PeopleExceptionEnum.COOK_TIME_IS_TOO_LONG);
+        if (duration > Integer.parseInt(split[1])) {
+            Throw.exception(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT, HttpStatus.PRECONDITION_FAILED);
+//            Throw.preconditionFailed(PeopleExceptionEnum.COOK_TIME_IS_TOO_LONG);
         }
-        // todo
-        return null;
+        return new Food(duration);
+    }
+
+    @Override
+    public void eat(Food food) {
+        Random random = new Random();
+        int i = random.nextInt(3);
+        if (i == 1) {
+            throw new RuntimeException("吃到鱼刺");
+        }
     }
 
 }

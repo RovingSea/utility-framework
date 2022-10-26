@@ -6,6 +6,7 @@ import io.github.rovingsea.utilityframework.spring.web.exception.HandlingExcepti
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -43,7 +44,8 @@ public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
-        if (converterType == MappingJackson2HttpMessageConverter.class) {
+        if (converterType == MappingJackson2HttpMessageConverter.class ||
+                converterType == StringHttpMessageConverter.class) {
             return true;
         }
         return false;
