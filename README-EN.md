@@ -131,16 +131,16 @@ For example, there is such a controller:
 public class StudentController {
 
     @Autowired
-    private StudentService studentService;
+    private StudentService peopleService;
 
     @RequestMapping("/queryStudentById/{id}")
     public Student queryStudentById(@PathVariable int id) {
-        return studentService.getStudentById(id);
+        return peopleService.getStudentById(id);
     }
 
     @RequestMapping("/queryStudentsByAge/{age}")
     public List<Student> queryStudentsByAge(@PathVariable int age) {
-        return studentService.getStudentsByAge(age);
+        return peopleService.getStudentsByAge(age);
     }
 
 }
