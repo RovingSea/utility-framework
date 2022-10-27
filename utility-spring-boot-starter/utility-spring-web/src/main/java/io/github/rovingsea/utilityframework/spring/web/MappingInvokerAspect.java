@@ -1,6 +1,5 @@
 package io.github.rovingsea.utilityframework.spring.web;
 
-import io.github.rovingsea.utilityframework.spring.web.utils.HttpServletRequestUtils;
 import io.github.rovingsea.utilityframework.spring.web.validator.ValidatorInvoker;
 import io.github.rovingsea.utilityframework.spring.web.validator.ValidatorLoader;
 import org.aspectj.lang.JoinPoint;
@@ -8,12 +7,15 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -32,8 +34,17 @@ public class MappingInvokerAspect {
 
     private final ValidatorLoader validatorLoader;
 
+    private final List<Class<? extends Annotation>> mappingList;
+
     public MappingInvokerAspect(ApplicationContext context) {
         this.validatorLoader = context.getBean(ValidatorLoader.class);
+        mappingList = new ArrayList<>();
+        mappingList.add(RequestMapping.class);
+        mappingList.add(GetMapping.class);
+        mappingList.add(PostMapping.class);
+        mappingList.add(DeleteMapping.class);
+        mappingList.add(PutMapping.class);
+        mappingList.add(PatchMapping.class);
     }
 
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping) || " +
@@ -47,14 +58,48 @@ public class MappingInvokerAspect {
 
     @Before("pointcut()")
     public void intercept(JoinPoint jp) throws Throwable {
-        HttpServletRequest request = HttpServletRequestUtils.instance();
-        String requestURI = request.getRequestURI();
-        if (this.validatorLoader.getValidatePaths().stream().noneMatch(requestURI::contains)) {
+        String[] path = getMappingPath(jp);
+        List<String> validatePaths = this.validatorLoader.getValidatePaths();
+        if (path == null) {
             return;
         }
-        ValidatorInvoker validatorInvoker = validatorLoader.getValidatorInvoker(requestURI);
-        Object[] args = jp.getArgs();
-        validatorInvoker.invoke(args);
+        for (String p : path) {
+            if (validatePaths.contains(p)) {
+                ValidatorInvoker validatorInvoker = validatorLoader.getValidatorInvoker(p);
+                Object[] args = jp.getArgs();
+                validatorInvoker.invoke(args);
+                return;
+            }
+        }
+    }
+
+    private String[] getMappingPath(JoinPoint jp) throws NoSuchMethodException,
+            InvocationTargetException, IllegalAccessException {
+        Annotation annotation = null;
+        MethodSignature signature = (MethodSignature) jp.getSignature();
+        Method method = signature.getMethod();
+        for (Class<? extends Annotation> mappingAnnotationClass : this.mappingList) {
+            annotation = method.getAnnotation(mappingAnnotationClass);
+            if (annotation != null) {
+                break;
+            }
+        }
+        if (annotation == null) {
+            return null;
+        }
+        Method value = annotation.annotationType().getDeclaredMethod("value");
+        String[] invoke = (String[]) value.invoke(annotation);
+        RequestMapping annotationOnClass = jp.getTarget().getClass()
+                .getAnnotation(RequestMapping.class);
+        String[] pathPrefixes = annotationOnClass.value();
+
+        List<String> path = new ArrayList<>();
+        for (String pathPrefix : pathPrefixes) {
+            for (String s : invoke) {
+                path.add(pathPrefix + s);
+            }
+        }
+        return path.toArray(new String[0]);
     }
 
 }

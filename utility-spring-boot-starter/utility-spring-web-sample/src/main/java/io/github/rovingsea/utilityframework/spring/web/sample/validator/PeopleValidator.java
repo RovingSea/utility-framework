@@ -20,15 +20,15 @@ import java.util.Date;
 @Validator("/people")
 public class PeopleValidator {
 
-    @ValidateMapping("/queryById")
-    public void queryStudentById(int id) {
+    @ValidateMapping("/queryById/{id}")
+    public void queryById(int id) {
         if (id < 0) {
             Throw.badRequest(PeopleExceptionEnum.QUERY_BY_ID);
         }
     }
 
-    @ValidateMapping("/queryByAge")
-    public void queryStudentsByAge(int age) {
+    @ValidateMapping("/queryByAge/{age}")
+    public void queryByAge(int age) {
         if (age < 0 || age > 150) {
             Throw.badRequest(PeopleExceptionEnum.QUERY_BY_AGE);
         }

@@ -92,7 +92,7 @@ public class ValidatorLoader {
     }
 
     public ValidatorInvoker getValidatorInvoker(String requestURI) {
-        String uri = this.validatePaths.stream().filter(requestURI::contains).findAny().orElse(null);
+        String uri = this.validatePaths.stream().filter(requestURI::equals).findAny().orElse(null);
         if (StringUtils.isEmpty(uri)) {
             throw new UtilityContextException("The verification " +
                     "path does not match a verification method");
