@@ -1,11 +1,11 @@
 package io.github.rovingsea.utilityframework.spring.web.exception;
 
-import io.github.rovingsea.utilityframework.spring.web.utils.HttpServletRequestUtils;
-import io.github.rovingsea.utilityframework.spring.web.utils.HttpServletResponseUtils;
 import io.github.rovingsea.utilityframework.spring.web.exception.handler.AbstractExceptionHandler;
+import io.github.rovingsea.utilityframework.spring.web.exception.handler.ExpectedExceptionHandler;
 import io.github.rovingsea.utilityframework.spring.web.exception.handler.SpringExceptionHandler;
 import io.github.rovingsea.utilityframework.spring.web.exception.handler.UnexpectedExceptionHandler;
-import io.github.rovingsea.utilityframework.spring.web.exception.handler.ExpectedExceptionHandler;
+import io.github.rovingsea.utilityframework.spring.web.utils.HttpServletRequestUtils;
+import io.github.rovingsea.utilityframework.spring.web.utils.HttpServletResponseUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * When any exception occurs in the Controller,
@@ -28,8 +29,13 @@ public class ExceptionDispatcher {
 
     private final ApplicationContext context;
 
+    private final Map<Class<? extends Exception>, AbstractExceptionHandler> handlerMap;
+
     public ExceptionDispatcher(ApplicationContext context) {
         this.context = context;
+        handlerMap = new ConcurrentHashMap<>();
+        handlerMap.put(ServletException.class, context.getBean(SpringExceptionHandler.class));
+        handlerMap.put(ExpectedException.class, context.getBean(ExpectedExceptionHandler.class));
     }
 
     /**
@@ -57,15 +63,8 @@ public class ExceptionDispatcher {
      * @return subclass of {@link AbstractExceptionHandler}
      */
     private AbstractExceptionHandler getExceptionHandler(Throwable throwable) {
-        AbstractExceptionHandler exceptionHandler
-                = this.context.getBean(UnexpectedExceptionHandler.class);
-        if (throwable instanceof ServletException) {
-            exceptionHandler = this.context.getBean(SpringExceptionHandler.class);
-        }
-        if (throwable instanceof ExpectedException) {
-            exceptionHandler = this.context.getBean(ExpectedExceptionHandler.class);
-        }
-        return exceptionHandler;
+        return this.handlerMap.getOrDefault(throwable.getClass(),
+                this.context.getBean(UnexpectedExceptionHandler.class));
     }
 
     private HttpServletResponse getHttpServletResponse() {

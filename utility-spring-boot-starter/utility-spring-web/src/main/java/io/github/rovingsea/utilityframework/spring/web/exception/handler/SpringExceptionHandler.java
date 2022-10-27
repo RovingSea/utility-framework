@@ -13,6 +13,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
@@ -36,6 +37,8 @@ public class SpringExceptionHandler extends AbstractExceptionHandler {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final Map<Class<? extends Exception>, HttpStatus> httpStatusMap;
+
     static {
         // Eagerly load the NestedExceptionUtils class to avoid classloader deadlock
         // issues on OSGi when calling getMessage(). Reported by Don Brown; SPR-5607.
@@ -44,26 +47,25 @@ public class SpringExceptionHandler extends AbstractExceptionHandler {
 
     public SpringExceptionHandler(ApplicationContext context) {
         super(context.getBean(ControllerExceptionResponse.class));
+        httpStatusMap = new ConcurrentHashMap<>();
+        httpStatusMap.put(HttpMediaTypeException.class, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        httpStatusMap.put(HttpRequestMethodNotSupportedException.class, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @Override
     public void doHandle(Map<String, Object> responseBody, Map<String, String> responseHeader,
-                           HttpServletRequest request, HttpServletResponse response,
-                           Throwable throwable) {
+                         HttpServletRequest request, HttpServletResponse response,
+                         Throwable throwable) {
         Throwable rootCause = NestedExceptionUtils.getRootCause(throwable);
         logger.error(NestedExceptionUtils.buildMessage(throwable.getMessage(), rootCause));
-        if (throwable instanceof HttpMediaTypeException) {
-            responseBody.put("code", HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
-            responseBody.put("message", HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase());
-            response.setStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
-        } else if (throwable instanceof HttpRequestMethodNotSupportedException) {
-            responseBody.put("code", HttpStatus.METHOD_NOT_ALLOWED.value());
-            responseBody.put("message", HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase());
-            response.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
-        } else {
-            responseBody.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            responseBody.put("message", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        }
+        HttpStatus httpStatus = this.httpStatusMap.getOrDefault(throwable.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
+        setResponse(responseBody, response, httpStatus);
+    }
+
+    private void setResponse(Map<String, Object> responseBody, HttpServletResponse response,
+                             HttpStatus httpStatus) {
+        responseBody.put("code", httpStatus.value());
+        responseBody.put("message", httpStatus.getReasonPhrase());
+        response.setStatus(httpStatus.value());
     }
 }
