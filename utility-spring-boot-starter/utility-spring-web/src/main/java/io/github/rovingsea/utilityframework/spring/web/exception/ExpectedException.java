@@ -56,7 +56,7 @@ public class ExpectedException extends RuntimeException {
      * Its existence provides context information when an exception is thrown.
      * <p>
      * For example, I found meat I didn't like, but now I have two pets.
-     * The opinion is to decide which dog to eat.
+     * The opinion is to decide which pet to eat.
      * </p>
      */
     protected final Object opinion;

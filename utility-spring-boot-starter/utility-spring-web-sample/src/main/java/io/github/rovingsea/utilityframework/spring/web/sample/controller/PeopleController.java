@@ -31,6 +31,11 @@ public class PeopleController {
         return peopleService.getStudentsByAge(age);
     }
 
+    @RequestMapping("/queryAgeById/{id}")
+    public Integer queryAgeById(@PathVariable int id) {
+        return peopleService.getStudentById(id).getAge();
+    }
+
     @RequestMapping("/cook")
     public String cook(@RequestBody PreparationDto preparationDto) {
         Ingredient ingredient = preparationDto.getIngredient();
