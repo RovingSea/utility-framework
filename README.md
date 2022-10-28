@@ -29,9 +29,9 @@ _Utility Framework_ 目前提供了如下功能：
     - 丢垃圾桶、洗碗和收拾餐桌——设置响应头、体和状态；
     - 边吃边洗菜——一边业务操作一边参数校验，耦合。
 
-  **参数校验**：您只需要像使用 @Controller、@RequestMapping 注解一样使用 @Validator、@ValidateMapping 就可以完成 Controller 层的参数校验。
+  **参数校验**：您只需要像使用 `@Controller`、`@RequestMapping` 注解一样使用 `@Validator`、`@ValidateMapping` 就可以完成 Controller 层的参数校验。
 
-  **统一响应**：您只需要实现 ControllerReturnResponse 和 ControllerExceptionResponse 接口并注入 Spring 容器中即可。
+  **统一响应**：您只需要实现 `ControllerReturnResponse` 和 `ControllerExceptionResponse` 接口并注入 Spring 容器中即可。
 
   **全局异常捕捉**：您只需要秉持预料之内和非预料之内的思想进行异常的抛出，凡是您手动抛出来的异常，我们都将其视为预料之内的异常，反之视为 BUG。其中您可以结合工具类 Throw 进行异常抛出。
 
