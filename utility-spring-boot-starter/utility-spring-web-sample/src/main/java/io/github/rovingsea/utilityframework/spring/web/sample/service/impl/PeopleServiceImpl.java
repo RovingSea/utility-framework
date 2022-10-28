@@ -39,12 +39,12 @@ public class PeopleServiceImpl implements PeopleService {
     public Food cook(Ingredient ingredient, int duration) {
         String[] split = ingredient.getCookedTime().split("~");
         if (duration < Integer.parseInt(split[0])) {
-            Throw.exception(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT, duration, HttpStatus.PRECONDITION_FAILED);
-//            Throw.preconditionFailed(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT, lower);
+            Throw.status428(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT, duration);
+//            Throw.exception(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT, duration, HttpStatus.PRECONDITION_FAILED);
         }
         if (duration > Integer.parseInt(split[1])) {
-            Throw.exception(PeopleExceptionEnum.COOK_TIME_IS_TOO_SHORT, HttpStatus.PRECONDITION_FAILED);
-//            Throw.preconditionFailed(PeopleExceptionEnum.COOK_TIME_IS_TOO_LONG);
+            Throw.status428(PeopleExceptionEnum.COOK_TIME_IS_TOO_LONG, duration);
+//            Throw.exception(PeopleExceptionEnum.COOK_TIME_IS_TOO_LONG, duration, HttpStatus.PRECONDITION_FAILED);
         }
         return new Food(duration);
     }

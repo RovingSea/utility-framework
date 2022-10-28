@@ -20,18 +20,19 @@ public enum PeopleExceptionEnum implements ExceptionEnum {
 
     COOK_INGREDIENT_OUT_OF_DATE(400004, "the given ingredient is out of date"),
 
-    COOK_TIME_IS_TOO_LONG(400005, "the given cook time is too long"),
+    COOK_TIME_IS_TOO_LONG(400005, "the given cook time is too long") {
+        @Override
+        public void postProcessAfterThrow(Object opinion) {
+            int duration = (int) opinion;
+            System.out.println("煮了" + duration + "分钟，都快烧了，喂猫吧！");
+        }
+    },
 
     COOK_TIME_IS_TOO_SHORT(400006, "the given cook time is too short") {
         @Override
         public void postProcessAfterThrow(Object opinion) {
-            if (opinion instanceof Integer) {
-                if ((int) opinion < 5) {
-                    System.out.println("喂狗吃");
-                } else if ((int) opinion > 5) {
-                    System.out.println("喂猫吃");
-                }
-            }
+            int duration = (int) opinion;
+            System.out.println("才煮了" + duration + "分钟，熟都没熟，喂狗吧！");
         }
     };
 

@@ -23,14 +23,14 @@ public class PeopleValidator {
     @ValidateMapping("/queryById/{id}")
     public void queryById(int id) {
         if (id < 0) {
-            Throw.badRequest(PeopleExceptionEnum.QUERY_BY_ID);
+            Throw.status400(PeopleExceptionEnum.QUERY_BY_ID);
         }
     }
 
     @ValidateMapping("/queryByAge/{age}")
     public void queryByAge(int age) {
         if (age < 0 || age > 150) {
-            Throw.badRequest(PeopleExceptionEnum.QUERY_BY_AGE);
+            Throw.status400(PeopleExceptionEnum.QUERY_BY_AGE);
         }
     }
 
@@ -38,7 +38,7 @@ public class PeopleValidator {
     public void cook(@RequestBody PreparationDto preparationDto) throws ParseException {
         Ingredient ingredient = preparationDto.getIngredient();
         if (ingredient.isBad()) {
-            Throw.badRequest(PeopleExceptionEnum.COOK_INGREDIENT_BAD);
+            Throw.status400(PeopleExceptionEnum.COOK_INGREDIENT_BAD);
         }
         String productionDateStr = ingredient.getProductionDate();
         int qualityGuaranteePeriod = ingredient.getQualityGuaranteePeriod();
@@ -52,7 +52,7 @@ public class PeopleValidator {
 
         Date nowDate = new Date();
         if (qualityGuaranteePeriodDate.compareTo(nowDate) < 0) {
-            Throw.badRequest(PeopleExceptionEnum.COOK_INGREDIENT_OUT_OF_DATE);
+            Throw.status400(PeopleExceptionEnum.COOK_INGREDIENT_OUT_OF_DATE);
         }
 
     }
