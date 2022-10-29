@@ -1,10 +1,10 @@
 package io.github.rovingsea.utilityframework.spring.web.sample.validator;
 
+import io.github.rovingsea.utilityframework.spring.web.sample.controller.PeopleController;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.Ingredient;
 import io.github.rovingsea.utilityframework.spring.web.sample.entity.dto.PreparationDto;
 import io.github.rovingsea.utilityframework.spring.web.sample.exception.PeopleExceptionEnum;
 import io.github.rovingsea.utilityframework.spring.web.utils.Throw;
-import io.github.rovingsea.utilityframework.spring.web.validator.ValidateMapping;
 import io.github.rovingsea.utilityframework.spring.web.validator.Validator;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,24 +17,21 @@ import java.util.Date;
  * @author Haixin Wu
  * @since 1.0.0
  */
-@Validator("/people")
+@Validator(PeopleController.class)
 public class PeopleValidator {
 
-    @ValidateMapping("/queryById/{id}")
     public void queryById(int id) {
         if (id < 0) {
             Throw.status400(PeopleExceptionEnum.QUERY_BY_ID);
         }
     }
 
-    @ValidateMapping("/queryByAge/{age}")
     public void queryByAge(int age) {
         if (age < 0 || age > 150) {
             Throw.status400(PeopleExceptionEnum.QUERY_BY_AGE);
         }
     }
 
-    @ValidateMapping("/cook")
     public void cook(@RequestBody PreparationDto preparationDto) throws ParseException {
         Ingredient ingredient = preparationDto.getIngredient();
         if (ingredient.isBad()) {
