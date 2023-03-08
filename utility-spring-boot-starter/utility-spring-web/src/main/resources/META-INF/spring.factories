@@ -1,5 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  io.github.rovingsea.utilityframework.spring.web.exception.UtilityExceptionAutoConfiguration,\
-  io.github.rovingsea.utilityframework.spring.web.response.UtilityResponseAutoConfiguration,\
-  io.github.rovingsea.utilityframework.spring.web.validator.ValidatorAutoConfiguration,\
-  io.github.rovingsea.utilityframework.spring.web.utils.UtilityUtilsAutoConfiguration
