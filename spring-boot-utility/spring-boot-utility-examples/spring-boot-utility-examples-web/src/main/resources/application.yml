@@ -1,0 +1,7 @@
+spring:
+  boot:
+    utility:
+      web:
+        response:
+          bodyClassName: io.github.utilityframework.boot.example.web.response.ExampleResponseBody
+          headerClassName: io.github.utilityframework.boot.example.web.response.ExampleResponseHeader
